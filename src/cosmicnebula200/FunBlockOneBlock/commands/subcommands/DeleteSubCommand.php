@@ -34,11 +34,21 @@ class DeleteSubCommand extends BaseSubCommand
             $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('not-registered'));
             return;
         }
-        $oneBlockPlayer->setOneBlock('');
-        $player = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($name);
-        if ($player instanceof P)
-            $player->teleport(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
-        $sender->sendMessage();
+        if ($oneBlockPlayer->getOneBlock() == '')
+        {
+            $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-island'));
+            return;
+        }
+        foreach (FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlockPlayer->getOneBlock())->getMembers() as $member)
+        {
+            $player = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($member);
+            if ($player instanceof P)
+                $player->teleport(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
+            FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayerByPrefix($member)->setOneBlock('');
+        }
+        $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('deleted-ob', [
+            "{NAME}" => $oneBlockPlayer->getName()
+        ]));
     }
 
 }
