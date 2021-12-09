@@ -34,7 +34,9 @@ class OneBlockManager
 
     public function makeOneBlock(Player $player, string $name, World $world): void
     {
-        $this->oneBlocks[$name] = new OneBlock($name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, $world->getSpawnLocation());
+        $oneBlock = new OneBlock($name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, $world->getSpawnLocation());
+        $this->oneBlocks[$name] = $oneBlock;
+        $oneBlock->save();
     }
 
     public function getOneBlock(string $name): ?OneBlock

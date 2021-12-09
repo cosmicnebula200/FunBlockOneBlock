@@ -14,7 +14,8 @@ messages:
   have-ob: 'you have already created a oneblock island'
   no-ob: 'you do not have a oneblock island to use this command'
   not-registered: 'the mentioned player has not been registered'
-  no-island: 'the mentioned player has no island'
+  no-island: 'the mentioned player has no oneblock island'
+  no-ob-go: 'you do not have an oneblock island to go to'
   no-perms-delete: "you do not have permissions to delete someone else's OneBlock island"
   deleted-ob-others: 'successfully deleted {NAME}'s OneBlock Island'
   create: "successfully created an island"

@@ -17,3 +17,6 @@ permissions:
   funblockoneblock.delete.others:
     default: op
     description: with this permission the user can delete other players islands
+  funblockoneblock.go:
+    default: true
+    description: this permission allows the user to teleport to the oneblock island

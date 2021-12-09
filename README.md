@@ -31,3 +31,7 @@ OneBlock | OneBlock command for FunBlockOneBlock | funblockoneblock.command | ob
 
 SubCommand | Description | Permission | Aliases |
 ----------------- | ------------- | ------------- | -------- |
+create | creates a oneblock island | funblockoneblock.create | c, make
+go | teleports to your oneblock island | funblockoneblock.go |  |
+delete | deletes the mentioned players island | funblockoneblock.delete/ funblockoneblock.delete.others | |
+
