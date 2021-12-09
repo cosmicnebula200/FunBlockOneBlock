@@ -1,0 +1,22 @@
+# The configuration for each message of FunBlockOneBlock
+
+# Use & instead of § for a quicker colorizing of texts
+
+prefix: '&l&d[FunBlockOneBlock]'
+
+# seperator seperates the message from the prefix
+# Format looks like:
+# {prefix} {seperator} {message}
+# the spaces are automatically added so you dont have to worry about that too :))
+seperator: '&e=> &b'
+
+messages:
+  have-ob: 'you have already created a oneblock island'
+  no-ob: 'you do not have a oneblock island to use this command'
+  not-registered: 'the mentioned player has not been registered'
+  no-island: 'the mentioned player has no island'
+  no-perms-delete: "you do not have permissions to delete someone else's OneBlock island"
+  deleted-ob-others: 'successfully deleted {NAME}'s OneBlock Island'
+  create: "successfully created an island"
+  visit: 'visiting {player}'s OneBlock Island'
+  delete: 'deleted your OneBlock Island successfully'

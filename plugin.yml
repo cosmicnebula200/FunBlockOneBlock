@@ -1,0 +1,19 @@
+name: FunBlockOneBlock
+api: 4.0.0
+author: cosmicnebula200
+main: cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock
+version: 1.0.0
+
+permissions:
+  funblockoneblock.command:
+    default: true
+    description: this permission allows the set user to use the oneblock command
+  funblockoneblock.create:
+    default: true
+    description: this permission allows the user to create a OneBlock Island
+  funblockoneblock.delete:
+    default: true
+    description: with this permission the user can open the admin menu
+  funblockoneblock.delete.others:
+    default: op
+    description: with this permission the user can delete other players islands
