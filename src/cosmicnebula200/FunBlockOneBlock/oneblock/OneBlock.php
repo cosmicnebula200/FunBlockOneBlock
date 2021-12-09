@@ -154,13 +154,13 @@ class OneBlock
 
     public function save(): void
     {
-        FunBlockOneBlock::getInstance()->getDataBase()->executeChange('oneblock.islands.update', [
+        FunBlockOneBlock::getInstance()->getDataBase()->executeChange('funblockoneblock.oneblock.update', [
             'name' => $this->name,
             'leader' => $this->leader,
             'members' => implode(',', $this->members),
             'world' => $this->world,
             'xp' => $this->xp,
-            'level' => $this->level,
+            'level' => $this->level->asInt(),
             'spawn' => json_encode([
                 'x' => $this->spawn->getX(),
                 'y' => $this->spawn->getY(),

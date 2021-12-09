@@ -41,7 +41,7 @@ class FunBlockOneBlock extends PluginBase
     public function onEnable(): void
     {
         $this->saveDefaultConfig();
-        $this->saveResource('level.yml');
+        $this->saveResource('levels.yml');
         $this->saveResource('messages.yml');
         $this->initDataBase();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);

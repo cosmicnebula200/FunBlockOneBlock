@@ -1,6 +1,6 @@
 # The configuration for each message of FunBlockOneBlock
 
-# Use & instead of § for a quicker colorizing of texts
+# Use & instead of double S for a quicker colorizing of texts
 
 prefix: '&l&d[FunBlockOneBlock]'
 
@@ -17,7 +17,7 @@ messages:
   no-island: 'the mentioned player has no oneblock island'
   no-ob-go: 'you do not have an oneblock island to go to'
   no-perms-delete: "you do not have permissions to delete someone else's OneBlock island"
-  deleted-ob: 'successfully deleted {NAME}'s OneBlock Island'
+  deleted-ob: "successfully deleted {NAME}'s OneBlock Island"
   create: "successfully created an island"
-  visit: 'visiting {player}'s OneBlock Island'
+  visit: "visiting {player}'s OneBlock Island"
   delete: 'deleted your OneBlock Island successfully'

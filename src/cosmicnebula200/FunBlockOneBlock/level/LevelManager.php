@@ -16,22 +16,22 @@ class LevelManager
 
     public function __construct()
     {
-        $this->levelsConfig = new Config(FunBlockOneBlock::getInstance()->getDataFolder() . "messages.yml", Config::YAML);
+        $this->levelsConfig = new Config(FunBlockOneBlock::getInstance()->getDataFolder() . "levels.yml", Config::YAML);
         foreach ($this->levelsConfig->get('levels', []) as $level => $data)
         {
             $blocks = $data['blocks'];
             $blockArray = [];
             $xpArray = [];
-            foreach ($blocks as $block)
+            foreach ($blocks as $block => $value)
             {
-                for ($i = 0; $i <= $block['chance']; $i++)
+                for ($i = 0; $i <= $value['chance']; $i++)
                 {
-                    $blockArray[] = "$block:{$block['meta']}";
+                    $blockArray[] = "$block:{$value['meta']}";
                 }
-                $xpArray = $data['xp'];
+                $xpArray[] = $value['xp'];
             }
             shuffle($blockArray);
-            $this->levels[$level] = new Level($data['name'], $data['levelup'], $blockArray, $xpArray);
+            $this->levels[$level] = new Level($level, $data['name'], $data['levelup'], $blockArray, $xpArray);
         }
     }
 
@@ -39,6 +39,5 @@ class LevelManager
     {
         return $this->levels[$level] ?? null;
     }
-
 
 }

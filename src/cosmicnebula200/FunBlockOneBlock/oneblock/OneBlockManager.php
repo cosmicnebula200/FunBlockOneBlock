@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace cosmicnebula200\FunBlockOneBlock\oneblock;
 
-use cosmicnebula200\FunBlockOneBlock\commands\OneBlockCommand;
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
 use cosmicnebula200\FunBlockOneBlock\player\Player;
 use pocketmine\math\Vector3;
@@ -14,7 +13,7 @@ class OneBlockManager
 {
 
     /**@var OneBlock[]*/
-    private array $oneBlocks;
+    private array $oneBlocks = [];
 
     public function __construct()
     {

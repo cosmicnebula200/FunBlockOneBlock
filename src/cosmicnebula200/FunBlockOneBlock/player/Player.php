@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace cosmicnebula200\FunBlockOneBlock\player;
 
+use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
+
 class Player
 {
 
@@ -29,7 +31,15 @@ class Player
     public function setOneBlock(string $oneBlock): void
     {
         $this->oneBlock = $oneBlock;
+        $this->save();
     }
 
+    public function save(): void
+    {
+        FunBlockOneBlock::getInstance()->getDataBase()->executeChange('funblockoneblock.player.update', [
+            'name' => $this->name,
+            'oneblock' => $this->oneBlock
+        ]);
+    }
 
 }

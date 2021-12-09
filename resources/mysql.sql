@@ -1,36 +1,40 @@
--- #!mysql
+-- #! mysql
 -- #{ funblockoneblock
+
 -- #{ player
--- #    { init
+
+-- # { init
 CREATE TABLE IF NOT EXISTS funblockoneblock_player
 (
     name VARCHAR(32) PRIMARY KEY,
     oneblock STRING DEFAULT ''
     );
---  #   }
+-- # }
 
 -- # { load
 SELECT *
 FROM funblockoneblock_player;
--- #    }
+-- # }
 
 -- # { create
--- #        :name string
--- #        :oneblock string
+-- #   :name string
+-- #   :oneblock string
 INSERT INTO funblockoneblock_player (name, oneblock)
 VALUES (:name, :oneblock);
 -- # }
 
 -- # { update
--- #        :name string
--- #        :oneblock string
+-- #    :name string
+-- #    :oneblock string
 UPDATE funblockoneblock_player
 SET oneblock=:oneblock
 WHERE name=:name;
 -- # }
+
 -- # }
 
 -- # { oneblock
+
 -- # { init
 CREATE TABLE IF NOT EXISTS funblockoneblock_oneblock
 (
@@ -50,19 +54,19 @@ FROM funblockoneblock_oneblock;
 -- # }
 
 -- # { create
--- #        :name string
--- #        :leader string
--- #        :members string
--- #        :world string
--- #        :xp int
--- #        :level int
--- #        :spawn string
+-- #   name string
+-- #   :leader string
+-- #   :members string
+-- #   :world string
+-- #   :xp int
+-- #   :level int
+-- #   :spawn string
 INSERT INTO funblock_oneblock (name, leader, members, world, xp, level, spawn)
 VALUES (:name, :leader, :members, :world, :xp, :level, :spawn);
 -- # }
 
 -- # { delete
--- #        :name string
+-- #   :name string
 DELETE
 FROM funblockoneblock_oneblock
 WHERE name=:name
@@ -85,5 +89,7 @@ SET leader=:leader,
     spawn=:spawn
 WHERE name=:name;
 -- # }
+
 -- # }
+
 -- # }

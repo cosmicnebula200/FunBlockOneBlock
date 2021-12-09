@@ -10,6 +10,7 @@ use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
+use pocketmine\scheduler\ClosureTask;
 use Ramsey\Uuid\Uuid;
 
 class CreateSubCommand extends BaseSubCommand
@@ -32,14 +33,17 @@ class CreateSubCommand extends BaseSubCommand
             return;
         }
         $id = Uuid::uuid4()->toString();
-        $player->setOneBlock($id);
+        $player->setOneBlock($args['name']);
         FunBlockOneBlock::getInstance()->getGenerator()->generateWorld($id);
-        $spawn = FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($id)->getSpawnLocation();
-        $sender->teleport($spawn->add(0, 1, 0));
-        $sender->setImmobile(true);
-        $sender->getWorld()->setBlock($spawn, VanillaBlocks::DIRT());
-        $sender->getWorld()->setBlock($spawn->subtract(0,1,0), VanillaBlocks::BARRIER());
-        $sender->setImmobile(false);
+        $world = FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($id);
+        FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($sender, $world, $player, $args): void {
+            $sender->teleport($world->getSpawnLocation()->add(0, 1, 0));
+            $sender->setImmobile(true);
+            $sender->getWorld()->setBlock($world->getSpawnLocation(), VanillaBlocks::DIRT());
+            $sender->getWorld()->setBlock($world->getSpawnLocation()->subtract(0,1,0), VanillaBlocks::BARRIER());
+            $sender->setImmobile(false);
+            FunBlockOneBlock::getInstance()->getOneBlockManager()->makeOneBlock($player, $args['name'], $world);
+        }), 100);
     }
 
 }

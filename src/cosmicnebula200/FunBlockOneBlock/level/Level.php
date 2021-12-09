@@ -7,19 +7,25 @@ use pocketmine\block\Block;
 class Level
 {
 
+    /** @var int */
+    private int $level, $levelUpXp;
     /** @var string */
     private $name;
-    /** @var int */
-    private int $levelUpXp;
     /** @var array */
     private array $blocks, $xp;
 
-    public function __construct(string $name, int $levelUpXp, array $blocks, array $xp)
+    public function __construct(int $level, string $name, int $levelUpXp, array $blocks, array $xp)
     {
+        $this->level = $level;
         $this->name = $name;
         $this->levelUpXp = $levelUpXp;
         $this->blocks = $blocks;
         $this->xp = $xp;
+    }
+
+    public function asInt(): int
+    {
+        return $this->level;
     }
 
     public function getName(): string

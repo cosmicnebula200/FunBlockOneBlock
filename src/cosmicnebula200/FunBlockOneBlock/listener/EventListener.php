@@ -3,15 +3,28 @@
 namespace cosmicnebula200\FunBlockOneBlock\listener;
 
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
+use cosmicnebula200\FunBlockOneBlock\player\Player;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
+use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\item\Food;
 
 class EventListener implements Listener
 {
+
+    /**
+     * @param PlayerJoinEvent $event
+     * @return void
+     */
+    public function onJoin(PlayerJoinEvent $event): void
+    {
+        $player = FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayerByPrefix($event->getPlayer()->getName());
+        if (!$player instanceof Player)
+            FunBlockOneBlock::getInstance()->getPlayerManager()->createPlayer($event->getPlayer());
+    }
 
     /**
      * @param BlockBreakEvent $event
