@@ -44,5 +44,24 @@ class OneBlockManager
         return $this->oneBlocks[$name];
     }
 
+    public function getOneBlockByWorld(World $world): ?OneBlock
+    {
+        foreach ($this->oneBlocks as $oneBlock)
+        {
+            if ($oneBlock->getWorld() == $world->getDisplayName())
+                return $oneBlock;
+        }
+        return null;
+    }
+
+    public function isOneBlockWorld(string $world): bool
+    {
+        foreach ($this->oneBlocks as $oneBlock)
+        {
+            if ($oneBlock->getWorld() == $world)
+                return true;
+        }
+        return false;
+    }
 
 }
