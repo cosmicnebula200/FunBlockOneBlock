@@ -61,7 +61,7 @@ FROM funblockoneblock_oneblock;
 -- #   :xp int
 -- #   :level int
 -- #   :spawn string
-INSERT INTO funblock_oneblock (name, leader, members, world, xp, level, spawn)
+INSERT INTO funblockoneblock_oneblock (name, leader, members, world, xp, level, spawn)
 VALUES (:name, :leader, :members, :world, :xp, :level, :spawn);
 -- # }
 
@@ -80,12 +80,12 @@ WHERE name=:name
 -- #        :xp int
 -- #        :level int
 -- #        :spawn string
-UPDATE funblock_oneblock
+UPDATE funblockoneblock_oneblock
 SET leader=:leader,
     members=:members,
     world=:world,
     xp=:xp,
-    level=:level
+    level=:level,
     spawn=:spawn
 WHERE name=:name;
 -- # }
