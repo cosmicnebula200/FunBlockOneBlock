@@ -11,4 +11,6 @@ projects:
         branch: PM4
       - src: poggit/libasynql/libasynql
         version: ^3.4.0
+      - src: muqsit/simplepackethandler/SimplePacketHandler
+        version: ^0.0.1
 ...
