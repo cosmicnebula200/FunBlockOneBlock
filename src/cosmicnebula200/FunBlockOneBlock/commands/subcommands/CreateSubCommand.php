@@ -37,7 +37,8 @@ class CreateSubCommand extends BaseSubCommand
         FunBlockOneBlock::getInstance()->getGenerator()->generateWorld($id);
         $world = FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($id);
         FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($sender, $world, $player, $args): void {
-            $sender->teleport($world->getSpawnLocation()->add(0, 1, 0));
+            $sender->teleport($world->getSpawnLocation());
+            $sender->teleport($sender->getWorld()->getSpawnLocation()->add(0, 1, 0));
             $sender->setImmobile(true);
             $sender->getWorld()->setBlock($world->getSpawnLocation(), VanillaBlocks::DIRT());
             $sender->getWorld()->setBlock($world->getSpawnLocation()->subtract(0,1,0), VanillaBlocks::BARRIER());
