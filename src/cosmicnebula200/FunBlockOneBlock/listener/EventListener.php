@@ -3,6 +3,7 @@
 namespace cosmicnebula200\FunBlockOneBlock\listener;
 
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
+use cosmicnebula200\FunBlockOneBlock\level\Level;
 use cosmicnebula200\FunBlockOneBlock\player\Player;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\event\block\BlockBreakEvent;
@@ -41,11 +42,41 @@ class EventListener implements Listener
             $event->cancel();
             return;
         }
+        if (FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.autoinv.enabled', true))
+        {
+            $drops = [];
+            foreach ($event->getDrops() as $drop)
+            {
+                if (!$event->getPlayer()->getInventory()->canAddItem($drop))
+                    $drop[] = $drop;
+                else
+                    $event->getPlayer()->getInventory()->addItem($drop);
+            }
+            $event->setDrops([]);
+            if (FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.autoinv.drop-when-full'))
+                $event->setDrops($drops);
+        }
+        if (FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.autoxp', true))
+        {
+            $event->getPlayer()->getXpManager()->addXp($event->getXpDropAmount());
+            $event->setXpDropAmount(0);
+        }
         if ($block->getPosition()->getWorld()->getBlock($block->getPosition()->subtract(0,1,0)) === VanillaBlocks::BARRIER())
         {
             $block->getPosition()->getWorld()->setBlock($block->getPosition(), $world->getLevel()->getRandomBlock());
             if ($world->getLevel()->getBlockXp($event->getBlock()) !== null)
-                $world->setXp($world->getXp() + $world->getLevel()->getBlockXp($event->getBlock()));
+            {
+                $newXP = $world->getXp() + $world->getLevel()->getBlockXp($event->getBlock());
+                $newLevel = FunBlockOneBlock::getInstance()->getLevelManager()->getLevel($world->getLevel()->asInt() + 1);
+                if ($newXP >= $world->getLevel()->getLevelUpXp() && $newLevel instanceof Level)
+                {
+                    $world->setLevel($newLevel);
+                    if (FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.reset-xp'))
+                    {
+                        $world->setXp($newXP - $world->getLevel()->getLevelUpXp());
+                    }
+                }
+            }
         }
     }
 
