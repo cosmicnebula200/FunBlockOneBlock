@@ -24,6 +24,7 @@ messages:
   invite-pending: 'you already have one pending invitation'
   invite-sent: "you have sent {PLAYER} an invite to your OneBlock Island. Wait for them to accept"
   invite-accepted: '{PLAYER} has joined the OneBlock Island'
+  member-limit: 'you have reached the member limit on your island'
   create: "successfully created an island"
   visit: "visiting {NAME}"s OneBlock Island"
   delete: 'deleted your OneBlock Island successfully'

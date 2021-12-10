@@ -33,5 +33,5 @@ settings:
     drop-when-full: tru
   autoxp: true
   invite-timeout: 30
-  member-count: 5
+  max-members: 5
   reset-xp: true

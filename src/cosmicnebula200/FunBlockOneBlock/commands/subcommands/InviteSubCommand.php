@@ -7,6 +7,7 @@ namespace cosmicnebula200\FunBlockOneBlock\commands\subcommands;
 use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseSubCommand;
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
+use cosmicnebula200\FunBlockOneBlock\oneblock\OneBlock;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\scheduler\ClosureTask;
@@ -31,6 +32,18 @@ class InviteSubCommand extends BaseSubCommand
             return;
         }
         $player = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($args['name']);
+        $oneBlockPlayer = FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayerByPrefix($sender->getName());
+        $oneBlock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlockPlayer->getOneBlock());
+        if (!$oneBlock instanceof OneBlock)
+        {
+            $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-ob'));
+            return;
+        }
+        if (count($oneBlock->getMembers()) >= FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.max-members'))
+        {
+            $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('member-limit'));
+            return;
+        }
         if (!$player instanceof Player)
         {
             FunBlockOneBlock::getInstance()->getMessages()->getMessage('player-not-online');
