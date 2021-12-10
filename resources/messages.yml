@@ -11,6 +11,7 @@ prefix: '&l&d[FunBlockOneBlock]'
 seperator: '&e=> &b'
 
 messages:
+  player-not-online: 'the mentioned player is not online at the moment or has never joined the server'
   have-ob: 'you have already created a oneblock island'
   no-ob: 'you do not have a oneblock island to use this command'
   not-registered: 'the mentioned player has not been registered'
@@ -18,6 +19,10 @@ messages:
   no-ob-go: 'you do not have an oneblock island to go to'
   no-perms-delete: "you do not have permissions to delete someone else's OneBlock island"
   deleted-ob: "successfully deleted {NAME}'s OneBlock Island"
+  invite-get: "you have received an invite from {INVITER} do '/oneblock accept {INVITER}' to join their OneBlock island"
+  invite-expired: 'the invite has expired'
+  invite-pending: 'you already have one pending invitation'
+  invite-sent: "you have sent {PLAYER} an invite to your OneBlock Island. Wait for them to accept"
   create: "successfully created an island"
-  visit: "visiting {player}'s OneBlock Island"
+  visit: "visiting {NAME}"s OneBlock Island"
   delete: 'deleted your OneBlock Island successfully'

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace cosmicnebula200\FunBlockOneBlock;
 
+use CortexPE\Commando\PacketHooker;
 use cosmicnebula200\FunBlockOneBlock\commands\OneBlockCommand;
 use cosmicnebula200\FunBlockOneBlock\generator\Generator;
+use cosmicnebula200\FunBlockOneBlock\invites\InviteManager;
 use cosmicnebula200\FunBlockOneBlock\level\LevelManager;
 use cosmicnebula200\FunBlockOneBlock\listener\EventListener;
 use cosmicnebula200\FunBlockOneBlock\messages\Messages;
@@ -30,6 +32,8 @@ class FunBlockOneBlock extends PluginBase
     private OneBlockManager $oneBlockManager;
     /** @var LevelManager */
     private LevelManager $levelManager;
+    /** @var InviteManager */
+    private InviteManager $inviteManager;
     /** @var FunBlockOneBlock */
     private static self $instance;
 
@@ -40,6 +44,8 @@ class FunBlockOneBlock extends PluginBase
 
     public function onEnable(): void
     {
+        if (!PacketHooker::isRegistered())
+            PacketHooker::register($this);
         $this->saveDefaultConfig();
         $this->saveResource('levels.yml');
         $this->saveResource('messages.yml');
@@ -50,6 +56,7 @@ class FunBlockOneBlock extends PluginBase
         $this->playerManager = new PlayerManager();
         $this->oneBlockManager = new OneBlockManager();
         $this->levelManager = new LevelManager();
+        $this->inviteManager = new InviteManager();
         $this->getServer()->getCommandMap()->register('FunBlockOneBlock', new OneBlockCommand($this, 'oneblock', 'the basecommand for FunBlockOneBlock', ['ob']));
     }
 
@@ -62,6 +69,9 @@ class FunBlockOneBlock extends PluginBase
         $this->dataConnector = $db;
     }
 
+    /**
+     * @return DataConnector
+     */
     public function getDataBase(): DataConnector
     {
         return $this->dataConnector;
@@ -99,9 +109,20 @@ class FunBlockOneBlock extends PluginBase
         return $this->oneBlockManager;
     }
 
+    /**
+     * @return LevelManager
+     */
     public function getLevelManager(): LevelManager
     {
         return $this->levelManager;
+    }
+
+    /**
+     * @return InviteManager
+     */
+    public function getInviteManager(): InviteManager
+    {
+        return $this->inviteManager;
     }
 
     /**

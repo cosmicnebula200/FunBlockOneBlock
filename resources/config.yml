@@ -28,7 +28,10 @@ luckyblocks:
 
 # See README.md for more information about each individual setting
 settings:
-  autoinv: true
-  barrier: true
+  autoinv:
+    enabled: true
+    drop-when-full: tru
+  autoxp: true
+  invite-timeout: 30
   member-count: 5
   reset-xp: true

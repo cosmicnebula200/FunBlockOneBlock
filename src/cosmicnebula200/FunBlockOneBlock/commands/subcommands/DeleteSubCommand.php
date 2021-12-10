@@ -23,7 +23,7 @@ class DeleteSubCommand extends BaseSubCommand
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         $name = $args['name'];
-        if ($name !== $sender->getName() && !$sender->hasPermission('funblockoneblock.delete.others'))
+        if ($name !== $sender->getName() && !$sender->hasPermission('funblockoneblock.deleteothers'))
         {
             $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-perms-delete'));
             return;
