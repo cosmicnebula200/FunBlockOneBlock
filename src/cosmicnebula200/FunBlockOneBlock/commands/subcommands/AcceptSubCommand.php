@@ -21,7 +21,7 @@ class AcceptSubCommand extends BaseSubCommand
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         $invite = FunBlockOneBlock::getInstance()->getInviteManager()->getPlayerInvites($args['name']);
-        if ($invite instanceof Invite)
+        if (!$invite instanceof Invite)
             return;
 
         if (!$invite->handleInvite())
@@ -39,7 +39,6 @@ class AcceptSubCommand extends BaseSubCommand
                     "{PLAYER}" => $sender->getName()
                 ]));
         }
-
     }
 
 }
