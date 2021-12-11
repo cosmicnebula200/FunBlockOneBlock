@@ -49,6 +49,7 @@ class FunBlockOneBlock extends PluginBase
         $this->saveDefaultConfig();
         $this->saveResource('levels.yml');
         $this->saveResource('messages.yml');
+        $this->saveResource('forms.yml');
         $this->initDataBase();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
         $this->generator = new Generator();

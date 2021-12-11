@@ -35,7 +35,9 @@ OneBlock | OneBlock command for FunBlockOneBlock | funblockoneblock.command | ob
 
 SubCommand | Description | Permission | Aliases |
 ----------------- | ------------- | ------------- | -------- |
+accept | accepts the invite from the mentioned player| funblockoneblock.accept| |
 create | creates a oneblock island | funblockoneblock.create | c, make
-go | teleports to your oneblock island | funblockoneblock.go |  |
 delete | deletes the mentioned players island | funblockoneblock.delete/ funblockoneblock.delete.others | |
-
+go | teleports to your oneblock island | funblockoneblock.go |  |
+invite | invites the mentioned player to your oneblock island | funblockoneblock.invite | |
+visit | visit the mentioned player's oneblock island | funblockoneblock.visit | |
