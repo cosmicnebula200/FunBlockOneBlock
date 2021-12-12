@@ -130,6 +130,22 @@ class OneBlock
     }
 
     /**
+     * @return array
+     */
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
+
+    /**
+     * @param array $settings
+     */
+    public function updateSettings(array $settings): void
+    {
+        $this->settings = $settings;
+    }
+
+    /**
      * @param Level $level
      */
     public function setLevel(Level $level): void
