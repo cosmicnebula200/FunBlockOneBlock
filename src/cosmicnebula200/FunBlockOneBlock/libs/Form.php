@@ -12,7 +12,7 @@ class Form implements IForm
     /** @var array */
     protected array $data = [];
     /** @var callable|null */
-    private ?Closure $callable;
+    private $callable;
 
     /**
      * @param callable|null $callable
