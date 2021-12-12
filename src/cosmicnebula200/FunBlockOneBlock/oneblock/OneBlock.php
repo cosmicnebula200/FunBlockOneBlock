@@ -19,10 +19,12 @@ class OneBlock
     private int $xp;
     /** @var Level */
     private Level $level;
+    /** @var array */
+    private array $settings;
     /**@var Vector3*/
     private Vector3 $spawn;
 
-    public function __construct(string $name, string $leader, array $members, string $world, int $xp, int $level, Vector3 $spawn)
+    public function __construct(string $name, string $leader, array $members, string $world, int $xp, int $level, array $settings, Vector3 $spawn)
     {
         $this->name = $name;
         $this->leader = $leader;
@@ -30,6 +32,7 @@ class OneBlock
         $this->world = $world;
         $this->xp = $xp;
         $this->level = FunBlockOneBlock::getInstance()->getLevelManager()->getLevel($level);
+        $this->settings = $settings;
         $this->spawn = $spawn;
     }
 

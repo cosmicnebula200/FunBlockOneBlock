@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS funblockoneblock_oneblock
     world STRING,
     xp INT,
     level INT,
+    settings STRING,
     spawn STRING
     );
 -- # }
@@ -60,9 +61,10 @@ FROM funblockoneblock_oneblock;
 -- #   :world string
 -- #   :xp int
 -- #   :level int
+-- #   :settings string
 -- #   :spawn string
-INSERT INTO funblockoneblock_oneblock (name, leader, members, world, xp, level, spawn)
-VALUES (:name, :leader, :members, :world, :xp, :level, :spawn);
+INSERT INTO funblockoneblock_oneblock (name, leader, members, world, xp, level, settings, spawn)
+VALUES (:name, :leader, :members, :world, :xp, :level, :settings, :spawn);
 -- # }
 
 -- # { delete
@@ -79,6 +81,7 @@ WHERE name=:name
 -- #        :world string
 -- #        :xp int
 -- #        :level int
+-- #        :settings string
 -- #        :spawn string
 UPDATE funblockoneblock_oneblock
 SET leader=:leader,
@@ -86,6 +89,7 @@ SET leader=:leader,
     world=:world,
     xp=:xp,
     level=:level,
+    settings=:settings,
     spawn=:spawn
 WHERE name=:name;
 -- # }

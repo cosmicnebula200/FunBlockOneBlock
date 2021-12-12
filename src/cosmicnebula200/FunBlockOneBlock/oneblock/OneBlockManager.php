@@ -25,7 +25,7 @@ class OneBlockManager
                 foreach ($rows as $row)
                 {
                     $spawn = (array)json_decode($row['spawn']);
-                    $this->oneBlocks[$row['name']] = new OneBlock($row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $row['xp'], $row['level'], new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
+                    $this->oneBlocks[$row['name']] = new OneBlock($row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $row['xp'], $row['level'], (array)json_decode($row['settings']), new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
                 }
             }
         );
@@ -33,7 +33,7 @@ class OneBlockManager
 
     public function makeOneBlock(Player $player, string $name, World $world): void
     {
-        $oneBlock = new OneBlock($name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, $world->getSpawnLocation());
+        $oneBlock = new OneBlock($name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, ['visit' => true, 'pvp' => false], $world->getSpawnLocation());
         $this->oneBlocks[$name] = $oneBlock;
         $oneBlock->save();
     }

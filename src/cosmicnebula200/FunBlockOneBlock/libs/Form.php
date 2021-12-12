@@ -2,7 +2,6 @@
 
 namespace cosmicnebula200\FunBlockOneBlock\libs;
 
-use Closure;
 use pocketmine\form\Form as IForm;
 use pocketmine\player\Player;
 
