@@ -39,13 +39,20 @@ class DeleteSubCommand extends BaseSubCommand
             $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-island'));
             return;
         }
-        foreach (FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlockPlayer->getOneBlock())->getMembers() as $member)
+        $oneBlock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlockPlayer->getOneBlock());
+        foreach ($oneBlock->getMembers() as $member)
         {
             $player = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($member);
             if ($player instanceof P)
                 $player->teleport(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
             FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayerByPrefix($member)->setOneBlock('');
         }
+        $world = FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($oneBlock->getWorld());
+        foreach ($world->getPlayers() as $p)
+            $p->teleport(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
+        if ($world->isLoaded())
+            FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->unloadWorld($world);
+        // todo delete world folders ok
         $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('deleted-ob', [
             "{NAME}" => $oneBlockPlayer->getName()
         ]));

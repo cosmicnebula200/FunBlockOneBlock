@@ -63,4 +63,15 @@ class OneBlockManager
         return false;
     }
 
+    public function deleteOneBlock(string $oneBlock): void
+    {
+        unset($this->oneBlocks[$oneBlock]);
+        FunBlockOneBlock::getInstance()->getDataBase()->executeGeneric(
+            'funblockoneblock.oneblock.delete', [
+                'name' => $oneBlock
+            ]
+        );
+        FunBlockOneBlock::getInstance()->getDataBase()->waitAll();
+    }
+
 }
