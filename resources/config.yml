@@ -36,6 +36,7 @@ settings:
   max-members: 5
   reset-xp: true
   damage:
+    default: true
     player: false
     lava: true
     drown: true

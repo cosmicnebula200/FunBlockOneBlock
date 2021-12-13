@@ -136,7 +136,8 @@ class EventListener implements Listener
             EntityDamageEvent::CAUSE_PROJECTILE => 'projectile',
             EntityDamageEvent::CAUSE_FIRE => 'fire',
             EntityDamageEvent::CAUSE_VOID => 'void',
-            EntityDamageEvent::CAUSE_STARVATION => 'hunger'
+            EntityDamageEvent::CAUSE_STARVATION => 'hunger',
+            default => 'default'
         };
         if (FunBlockOneBlock::getInstance()->getConfig()->getNested("settings.damage.$type", true))
             $event->cancel();
