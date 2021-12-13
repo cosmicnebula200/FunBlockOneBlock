@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace cosmicnebula200\FunBlockOneBlock\level;
 
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
