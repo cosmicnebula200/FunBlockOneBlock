@@ -14,6 +14,8 @@ class OneBlockManager
 
     /**@var OneBlock[]*/
     private array $oneBlocks = [];
+    /** @var array */
+    private array $worlds = [];
 
     public function __construct()
     {
@@ -26,6 +28,7 @@ class OneBlockManager
                 {
                     $spawn = (array)json_decode($row['spawn']);
                     $this->oneBlocks[$row['name']] = new OneBlock($row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $row['xp'], $row['level'], (array)json_decode($row['settings']), new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
+                    $this->worlds[] = $row['world'];
                 }
             }
         );
@@ -35,6 +38,7 @@ class OneBlockManager
     {
         $oneBlock = new OneBlock($name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, ['visit' => true, 'pvp' => false], $world->getSpawnLocation());
         $this->oneBlocks[$name] = $oneBlock;
+        $this->worlds[] = $world->getFolderName();
         $oneBlock->save();
     }
 
@@ -55,11 +59,8 @@ class OneBlockManager
 
     public function isOneBlockWorld(string $world): bool
     {
-        foreach ($this->oneBlocks as $oneBlock)
-        {
-            if ($oneBlock->getWorld() == $world)
-                return true;
-        }
+        if (in_array($world, $this->worlds))
+            return true;
         return false;
     }
 
