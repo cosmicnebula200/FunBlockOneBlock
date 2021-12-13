@@ -26,5 +26,5 @@ messages:
   invite-accepted: '{PLAYER} has joined the OneBlock Island'
   member-limit: 'you have reached the member limit on your island'
   create: "successfully created an island"
-  visit: "visiting {NAME}"s OneBlock Island"
+  visit: "visiting {NAME}'s OneBlock Island"
   delete: 'deleted your OneBlock Island successfully'
