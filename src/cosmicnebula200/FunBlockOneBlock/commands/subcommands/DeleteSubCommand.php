@@ -51,11 +51,26 @@ class DeleteSubCommand extends BaseSubCommand
         foreach ($world->getPlayers() as $p)
             $p->teleport(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
         if ($world->isLoaded())
+        {
+            $folderName = $world->getFolderName();
             FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->unloadWorld($world);
-        // todo delete world folders ok
+            $this->deleteWorld($folderName);
+        }
         $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('deleted-ob', [
             "{NAME}" => $oneBlockPlayer->getName()
         ]));
+    }
+
+    public function deleteWorld(string $folderName): void
+    {
+        $path = FunBlockOneBlock::getInstance()->getServer()->getDataPath() . DIRECTORY_SEPARATOR . $folderName;
+        foreach (array_diff(scandir($path), '..', '.') as $file)
+        {
+            if (is_dir($file))
+                $this->deleteWorld($folderName);
+            else
+                unlink($folderName);
+        }
     }
 
 }
