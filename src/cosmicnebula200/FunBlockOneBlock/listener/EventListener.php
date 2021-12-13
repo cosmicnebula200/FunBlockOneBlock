@@ -6,14 +6,17 @@ namespace cosmicnebula200\FunBlockOneBlock\listener;
 
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
 use cosmicnebula200\FunBlockOneBlock\level\Level;
+use cosmicnebula200\FunBlockOneBlock\oneblock\OneBlock;
 use cosmicnebula200\FunBlockOneBlock\player\Player;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\item\Food;
+use pocketmine\player\Player as P;
 
 class EventListener implements Listener
 {
@@ -112,6 +115,31 @@ class EventListener implements Listener
         {
             $event->cancel();
         }
+    }
+
+    /**
+     * @param EntityDamageEvent $event
+     * @return void
+     */
+    public function onPlayerDamage(EntityDamageEvent $event): void
+    {
+        $entity = $event->getEntity();
+        if (!$entity instanceof P)
+            return;
+        if (!FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByWorld($entity->getWorld()) instanceof OneBlock)
+            return;
+        $type = match ($event->getCause()) {
+            EntityDamageEvent::CAUSE_ENTITY_ATTACK => 'player',
+            EntityDamageEvent::CAUSE_LAVA => 'lava',
+            EntityDamageEvent::CAUSE_DROWNING => 'drown',
+            EntityDamageEvent::CAUSE_FALL => 'fall',
+            EntityDamageEvent::CAUSE_PROJECTILE => 'projectile',
+            EntityDamageEvent::CAUSE_FIRE => 'fire',
+            EntityDamageEvent::CAUSE_VOID => 'void',
+            EntityDamageEvent::CAUSE_STARVATION => 'hunger'
+        };
+        if (FunBlockOneBlock::getInstance()->getConfig()->getNested("settings.damage.$type", true))
+            $event->cancel();
     }
 
 }

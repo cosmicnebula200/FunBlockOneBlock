@@ -35,3 +35,12 @@ settings:
   invite-timeout: 30
   max-members: 5
   reset-xp: true
+  damage:
+    player: false
+    lava: true
+    drown: true
+    fall: false
+    projectile: false
+    fire: true
+    void: false
+    hunger: true

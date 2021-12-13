@@ -41,3 +41,15 @@ delete | deletes the mentioned players island | funblockoneblock.delete/ funbloc
 go | teleports to your oneblock island | funblockoneblock.go |  |
 invite | invites the mentioned player to your oneblock island | funblockoneblock.invite | |
 visit | visit the mentioned player's oneblock island | funblockoneblock.visit | |
+
+# Settings
+
+Setting | Description | type |
+--------|---------------|---------|
+autoinv.enable | Enables the autoinventory **ON THE ONEBLOCK ISLANDS** | boolean (true/false)
+autoinv.drop-when-full| Drops items on ground when the player has a full inventory | boolean (true/false)
+autoxp| Automatically sends xp on Mining on the OneBlock Islands | boolean (true/false)
+invite-time-out | The number of seconds to wait before an invite to a OneBlock Island expires | int (in seconds)
+max-members | The maximum number of players a OneBlock Island can have . This value includes the Leader too | int 
+reset-xp | Reset xp upon level-ups | boolean (true/false)
+damage | Toggles damages on OneBlock Island. **Here false means they wont take damage due to that cause** | boolean (true/false)
