@@ -30,7 +30,7 @@ luckyblocks:
 settings:
   autoinv:
     enabled: true
-    drop-when-full: tru
+    drop-when-full: true
   autoxp: true
   invite-timeout: 30
   max-members: 5
