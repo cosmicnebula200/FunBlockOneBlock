@@ -10,7 +10,7 @@ class InviteManager
 {
 
     /** @var Invite[]  */
-    private array $invites;
+    private array $invites = [];
 
     public function addInvite(string $id, Player $inviter, Player $receiver): void
     {

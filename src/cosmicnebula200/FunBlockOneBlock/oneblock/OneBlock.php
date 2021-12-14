@@ -180,6 +180,7 @@ class OneBlock
             'world' => $this->world,
             'xp' => $this->xp,
             'level' => $this->level->asInt(),
+            'settings' => json_encode($this->settings),
             'spawn' => json_encode([
                 'x' => $this->spawn->getX(),
                 'y' => $this->spawn->getY(),
