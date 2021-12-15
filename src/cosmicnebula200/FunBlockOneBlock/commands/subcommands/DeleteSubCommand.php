@@ -54,7 +54,7 @@ class DeleteSubCommand extends BaseSubCommand
         {
             $folderName = $world->getFolderName();
             FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->unloadWorld($world);
-            $this->deleteWorld($folderName);
+            $this->deleteWorld(FunBlockOneBlock::getInstance()->getServer()->getDataPath() . "/worlds/ " .$folderName);
         }
         $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('deleted-ob', [
             "{NAME}" => $oneBlockPlayer->getName()
