@@ -54,23 +54,23 @@ class DeleteSubCommand extends BaseSubCommand
         {
             $folderName = $world->getFolderName();
             FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->unloadWorld($world);
-            $this->deleteWorld(FunBlockOneBlock::getInstance()->getServer()->getDataPath() . "worlds\ " .$folderName);
+            $this->deleteWorld(FunBlockOneBlock::getInstance()->getServer()->getDataPath() . 'worlds' . DIRECTORY_SEPARATOR . $folderName);
         }
         $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('deleted-ob', [
             "{NAME}" => $oneBlockPlayer->getName()
         ]));
     }
 
-    public function deleteWorld(string $folderName): void
+    public function deleteWorld(string $path, string $previousPath = ''): void
     {
-        $path = FunBlockOneBlock::getInstance()->getServer()->getDataPath() . DIRECTORY_SEPARATOR . $folderName;
-        foreach (array_diff(scandir($path), '..', '.') as $file)
+        foreach (array_diff(scandir($path . DIRECTORY_SEPARATOR), ['..', '.']) as $file)
         {
-            if (is_dir($file))
-                $this->deleteWorld($folderName);
+            if (is_dir($path . DIRECTORY_SEPARATOR . $file))
+                $this->deleteWorld($path. DIRECTORY_SEPARATOR . $file. DIRECTORY_SEPARATOR);
             else
-                unlink($folderName);
+                unlink($path . DIRECTORY_SEPARATOR . $file);
         }
+        rmdir($path);
     }
 
 }
