@@ -8,6 +8,7 @@ use CortexPE\Commando\BaseSubCommand;
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
+use pocketmine\world\Position;
 
 class GoSubCommand extends BaseSubCommand
 {
@@ -27,7 +28,8 @@ class GoSubCommand extends BaseSubCommand
             $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-ob-go'));
             return;
         }
-        $sender->teleport(FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlock)->getSpawn());
+        $spawn = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlock)->getSpawn();
+        $sender->teleport(new Position($spawn->getX(), $spawn->getY( + 1), $spawn->getZ(), FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName(FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlock)->getWorld())));
     }
 
 }
