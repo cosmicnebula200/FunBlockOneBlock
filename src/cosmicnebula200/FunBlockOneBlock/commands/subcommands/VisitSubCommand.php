@@ -52,7 +52,7 @@ class VisitSubCommand extends BaseSubCommand
             if  ($oneblock instanceof OneBlock)
                 $oneblocks[] = $oneblock;
         }
-        $form = new SimpleForm(function (P $player, int $data) use ($oneblocks) {
+        $form = new SimpleForm(function (P $player, ?int $data) use ($oneblocks) {
             $oneblock = $oneblocks[$data];
             $player->teleport(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($oneblock->getWorld())->getSpawnLocation());
             $player->teleport($oneblock->getSpawn());
