@@ -61,6 +61,12 @@ class FunBlockOneBlock extends PluginBase
         $this->getServer()->getCommandMap()->register('FunBlockOneBlock', new OneBlockCommand($this, 'oneblock', 'the basecommand for FunBlockOneBlock', ['ob']));
     }
 
+    public function onDisable(): void
+    {
+        $this->dataConnector->waitAll();
+        $this->dataConnector->close();
+    }
+
     public function initDataBase(): void
     {
         $db = libasynql::create($this, $this->getConfig()->get('database'), ['mysql' => 'mysql.sql', 'sqlite' => 'sqlite.sql']);

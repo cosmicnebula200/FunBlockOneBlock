@@ -40,6 +40,7 @@ class Player
             'name' => $this->name,
             'oneblock' => $this->oneBlock
         ]);
+        FunBlockOneBlock::getInstance()->getDataBase()->waitAll();
     }
 
 }
