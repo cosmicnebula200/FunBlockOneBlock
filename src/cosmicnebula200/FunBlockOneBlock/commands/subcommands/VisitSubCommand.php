@@ -50,7 +50,7 @@ class VisitSubCommand extends BaseSubCommand
         {
             $oneblock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock(FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayer($player)->getOneBlock());
             if  ($oneblock instanceof OneBlock)
-                $oneblocks[] = $oneblock->getName();
+                $oneblocks[] = $oneblock;
         }
         $form = new SimpleForm(function (P $player, int $data) use ($oneblocks) {
             $oneblock = $oneblocks[$data];
