@@ -44,7 +44,7 @@ class OneBlockManager
 
     public function getOneBlock(string $name): ?OneBlock
     {
-        return $this->oneBlocks[$name];
+        return $this->oneBlocks[$name] ?? null;
     }
 
     public function getOneBlockByWorld(World $world): ?OneBlock
