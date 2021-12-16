@@ -21,7 +21,7 @@ class VisitSubCommand extends BaseSubCommand
     protected function prepare(): void
     {
         $this->setPermission('funblockoneblock.visit');
-        $this->registerArgument(0, new RawStringArgument('name'));
+        $this->registerArgument(0, new RawStringArgument('name', true));
     }
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void

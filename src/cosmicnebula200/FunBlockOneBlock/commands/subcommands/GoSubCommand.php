@@ -24,7 +24,7 @@ class GoSubCommand extends BaseSubCommand
         $oneBlock = FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayer($sender)->getOneBlock();
         if ($oneBlock == '')
         {
-            $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-island-go'));
+            $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-ob-go'));
             return;
         }
         $sender->teleport(FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlock)->getSpawn());

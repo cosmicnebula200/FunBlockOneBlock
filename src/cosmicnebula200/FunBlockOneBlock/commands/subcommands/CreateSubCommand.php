@@ -32,6 +32,7 @@ class CreateSubCommand extends BaseSubCommand
             $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('have-ob'));
             return;
         }
+        $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('world-generating'));
         $id = Uuid::uuid4()->toString();
         $player->setOneBlock($args['name']);
         FunBlockOneBlock::getInstance()->getGenerator()->generateWorld($id);

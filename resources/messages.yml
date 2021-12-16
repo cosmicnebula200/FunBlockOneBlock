@@ -11,6 +11,7 @@ prefix: '&l&d[FunBlockOneBlock]'
 seperator: '&e=> &b'
 
 messages:
+  world-generating: 'please wait till the world generates'
   player-not-online: 'the mentioned player is not online at the moment or has never joined the server'
   have-ob: 'you have already created a oneblock island'
   no-ob: 'you do not have a oneblock island to use this command'
