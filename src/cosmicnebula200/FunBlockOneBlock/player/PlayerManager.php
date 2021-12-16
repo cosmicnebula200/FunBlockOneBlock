@@ -28,7 +28,7 @@ class PlayerManager
 
     public function createPlayer(P $player): void
     {
-        FunBlockOneBlock::getInstance()->getDataBase()->executeInsert('funblockoneblock.player.init',
+        FunBlockOneBlock::getInstance()->getDataBase()->executeInsert('funblockoneblock.player.create',
         [
             'name' => $player->getName(),
             'oneblock' => ''

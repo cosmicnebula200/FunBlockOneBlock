@@ -36,9 +36,24 @@ class OneBlockManager
 
     public function makeOneBlock(Player $player, string $name, World $world): void
     {
-        $oneBlock = new OneBlock($name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, ['visit' => true, 'pvp' => false], $world->getSpawnLocation());
+        $spawn = $world->getSpawnLocation();
+        $oneBlock = new OneBlock($name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, ['visit' => true, 'pvp' => false], $spawn);
         $this->oneBlocks[$name] = $oneBlock;
         $this->worlds[] = $world->getFolderName();
+        FunBlockOneBlock::getInstance()->getDataBase()->executeInsert('funblockoneblock.oneblock.create', [
+            'name' => $name,
+            'leader' => $player->getName(),
+            'members' => implode(',', [$player->getName()]),
+            'world' => $world->getFolderName(),
+            'xp' => 0,
+            'level' => 0,
+            'settings' => json_encode(['visit' => true, 'pvp' => false]),
+            'spawn' => json_encode([
+                'x' => $spawn->getX(),
+                'y' => $spawn->getY(),
+                'z' => $spawn->getZ()
+            ])
+        ]);
         $oneBlock->save();
     }
 
