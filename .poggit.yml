@@ -5,6 +5,7 @@ branches:
 projects:
   FunBlockOneBlock:
     path: ""
+    icon: 'icon.png'
     libs:
       - src: CortexPE/Commando/Commando
         version:  ^3.0.0
