@@ -17,6 +17,7 @@ use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\item\Food;
 use pocketmine\player\Player as P;
+use pocketmine\scheduler\ClosureTask;
 
 class EventListener implements Listener
 {
@@ -53,7 +54,7 @@ class EventListener implements Listener
             foreach ($event->getDrops() as $drop)
             {
                 if (!$event->getPlayer()->getInventory()->canAddItem($drop))
-                    $drop[] = $drop;
+                    $drops[] = $drop;
                 else
                     $event->getPlayer()->getInventory()->addItem($drop);
             }
@@ -66,9 +67,8 @@ class EventListener implements Listener
             $event->getPlayer()->getXpManager()->addXp($event->getXpDropAmount());
             $event->setXpDropAmount(0);
         }
-        if ($block->getPosition()->getWorld()->getBlock($block->getPosition()->subtract(0,1,0)) === VanillaBlocks::BARRIER())
+        if ($block->getPosition()->getWorld()->getBlock($block->getPosition()->subtract(0,1,0))->getId() == VanillaBlocks::BARRIER()->getId())
         {
-            $block->getPosition()->getWorld()->setBlock($block->getPosition(), $world->getLevel()->getRandomBlock());
             if ($world->getLevel()->getBlockXp($event->getBlock()) !== null)
             {
                 $newXP = $world->getXp() + $world->getLevel()->getBlockXp($event->getBlock());
@@ -82,6 +82,9 @@ class EventListener implements Listener
                     }
                 }
             }
+            FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use($block, $world): void {
+                $block->getPosition()->getWorld()->setBlock($block->getPosition(), $world->getLevel()->getRandomBlock());
+            }), 1);
         }
     }
 

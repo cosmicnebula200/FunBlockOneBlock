@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace cosmicnebula200\FunBlockOneBlock\level;
 
 use pocketmine\block\Block;
+use pocketmine\block\BlockFactory;
 
 class Level
 {
@@ -49,7 +50,8 @@ class Level
 
     public function getRandomBlock(): Block
     {
-        return $this->blocks[mt_rand(0, count($this->blocks) -1)];
+        $block = explode(':' ,$this->blocks[mt_rand(0, count($this->blocks) -1)]);
+        return BlockFactory::getInstance()->get((int)$block[0], (int)$block[1]);
     }
 
 }
