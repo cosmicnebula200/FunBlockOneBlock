@@ -55,7 +55,7 @@ FROM funblockoneblock_oneblock;
 -- # }
 
 -- # { create
--- #   name string
+-- #   :name string
 -- #   :leader string
 -- #   :members string
 -- #   :world string
