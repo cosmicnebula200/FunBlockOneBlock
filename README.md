@@ -18,13 +18,25 @@
     description: this permission allows the set user to use the oneblock command
   funblockoneblock.create:
     default: true
-    description: this permission allows the user to create a OneBlock Island
+    description: this permission allows the user to create a oneblock island
   funblockoneblock.delete:
     default: true
-    description: with this permission the user can open the admin menu
-  funblockoneblock.delete.others:
+    description: with this permission the user can delete their island
+  funblockoneblock.deleteothers:
     default: op
-    description: with this permission the user can delete other players islands
+    description: with this permission the user can delete other players one islands
+  funblockoneblock.go:
+    default: true
+    description: this permission allows the user to teleport to the oneblock island
+  funblockoneblock.visit:
+    default: true
+    description: this permission allows the user to visit other players oneblock islands
+  funblockoneblock.invite:
+    default: true
+    description: this permission allows the user to invite players to their oneblock island
+  funblockoneblock.accept:
+    default: true
+    description: this permission allows the user to accept incoming invites when they have no oneblock island
 ```
 
 # Commands
