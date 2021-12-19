@@ -38,7 +38,7 @@ class InviteManager
         return true;
     }
 
-    public function voidInvite(string $id)
+    public function cancelInvite(string $id)
     {
         if (!isset($this->invites[$id]))
             return;

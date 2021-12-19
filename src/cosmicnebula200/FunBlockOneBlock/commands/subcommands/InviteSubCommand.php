@@ -60,7 +60,7 @@ class InviteSubCommand extends BaseSubCommand
             "{PLAYER}" => $player->getName()
         ]));
         FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($id): void {
-            FunBlockOneBlock::getInstance()->getInviteManager()->voidInvite($id);
+            FunBlockOneBlock::getInstance()->getInviteManager()->cancelInvite($id);
         }), FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.invite-timeout', 30) * 20);
     }
 

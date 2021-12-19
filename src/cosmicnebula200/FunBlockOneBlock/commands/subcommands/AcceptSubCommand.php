@@ -33,6 +33,9 @@ class AcceptSubCommand extends BaseSubCommand
         $inviter = FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayer($invite->getInviter());
         $player->setOneBlock($inviter->getOneBlock());
         $oneBlock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($player->getOneBlock());
+        $members = $oneBlock->getMembers();
+        $oneBlock->setMembers($members);
+        array_push($members, $sender->getName());
         foreach ($oneBlock->getMembers() as $member)
         {
             $mbr = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($member);
