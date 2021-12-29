@@ -7,7 +7,8 @@
  A OneBlock plugin for PocketMine-4.0.0
  
  **What is OneBlock?**
-OneBlock is a survival gamemode in which you stand on a lonely block floating in the void. You can mine the same block over and over, and it gives you basic materials that slowly become better and better. You go through certain phases, and the infinite block slowly upgrades to better blocks and this continues forever and ever.
+ 
+ OneBlock is a survival gamemode in which you stand on a lonely block floating in the void. You can mine the same block over and over, and it gives you basic materials that slowly become better and better. You go through certain phases, and the infinite block slowly upgrades to better blocks and this continues forever and ever.
 
 # Features
 - MySql and Sqlite3 providers
