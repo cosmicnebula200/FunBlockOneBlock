@@ -13,7 +13,7 @@ class Level
     /** @var int */
     private int $level, $levelUpXp;
     /** @var string */
-    private $name;
+    private string $name;
     /** @var array */
     private array $blocks, $xp;
 

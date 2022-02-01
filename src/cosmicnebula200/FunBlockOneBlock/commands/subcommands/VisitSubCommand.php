@@ -59,7 +59,7 @@ class VisitSubCommand extends BaseSubCommand
             $player->teleport(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($oneblock->getWorld())->getSpawnLocation());
             $player->teleport($oneblock->getSpawn());
         });
-        $formConfig = new Config(FunBlockOneBlock::getInstance()->getDataFolder() . "/forms.yml", Config::YAML);
+        $formConfig = new Config(FunBlockOneBlock::getInstance()->getDataFolder() . "forms.yml", Config::YAML);
         $form->setTitle(TextFormat::colorize($formConfig->getNested('visit.title')));
         foreach ($oneblocks as $oneblock)
         {

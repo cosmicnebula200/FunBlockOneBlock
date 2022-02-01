@@ -42,8 +42,8 @@ class EventListener implements Listener
         if (!FunBlockOneBlock::getInstance()->getOneBlockManager()->isOneBlockWorld($event->getPlayer()->getWorld()->getFolderName()))
             return;
         $block = $event->getBlock();
-        $world = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByWorld($block->getPosition()->getWorld());
-        if (!in_array($event->getPlayer()->getName(), $world->getMembers()))
+        $oneblock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByWorld($block->getPosition()->getWorld());
+        if (!in_array($event->getPlayer()->getName(), $oneblock->getMembers()))
         {
             $event->cancel();
             return;
@@ -69,21 +69,21 @@ class EventListener implements Listener
         }
         if ($block->getPosition()->getWorld()->getBlock($block->getPosition()->subtract(0,1,0))->getId() == VanillaBlocks::BARRIER()->getId())
         {
-            if ($world->getLevel()->getBlockXp($event->getBlock()) !== null)
+            if ($oneblock->getLevel()->getBlockXp($event->getBlock()) !== null)
             {
-                $newXP = $world->getXp() + $world->getLevel()->getBlockXp($event->getBlock());
-                $newLevel = FunBlockOneBlock::getInstance()->getLevelManager()->getLevel($world->getLevel()->asInt() + 1);
-                if ($newXP >= $world->getLevel()->getLevelUpXp() && $newLevel instanceof Level)
+                $newXP = $oneblock->getXp() + $oneblock->getLevel()->getBlockXp($event->getBlock());
+                $newLevel = FunBlockOneBlock::getInstance()->getLevelManager()->getLevel($oneblock->getLevel()->asInt() + 1);
+                if ($newXP >= $oneblock->getLevel()->getLevelUpXp() && $newLevel instanceof Level)
                 {
-                    $world->setLevel($newLevel);
+                    $oneblock->setLevel($newLevel);
                     if (FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.reset-xp'))
                     {
-                        $world->setXp($newXP - $world->getLevel()->getLevelUpXp());
+                        $oneblock->setXp($newXP - $oneblock->getLevel()->getLevelUpXp());
                     }
                 }
             }
-            FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use($block, $world): void {
-                $block->getPosition()->getWorld()->setBlock($block->getPosition(), $world->getLevel()->getRandomBlock());
+            FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use($block, $oneblock): void {
+                $block->getPosition()->getWorld()->setBlock($block->getPosition(), $oneblock->getLevel()->getRandomBlock());
             }), 1);
         }
     }
@@ -96,8 +96,8 @@ class EventListener implements Listener
     {
         if (!FunBlockOneBlock::getInstance()->getOneBlockManager()->isOneBlockWorld($event->getPlayer()->getWorld()->getFolderName()))
             return;
-        $world = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByWorld($event->getBlock()->getPosition()->getWorld());
-        if (!in_array($event->getPlayer()->getName(), $world->getMembers()))
+        $oneblock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByWorld($event->getBlock()->getPosition()->getWorld());
+        if (!in_array($event->getPlayer()->getName(), $oneblock->getMembers()))
         {
             $event->cancel();
         }
@@ -113,8 +113,8 @@ class EventListener implements Listener
             return;
         if ($event->getItem() instanceof Food)
             return;
-        $world = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByWorld($event->getPlayer()->getWorld());
-        if (!in_array($event->getPlayer()->getName(), $world->getMembers()))
+        $oneblock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByWorld($event->getPlayer()->getWorld());
+        if (!in_array($event->getPlayer()->getName(), $oneblock->getMembers()))
         {
             $event->cancel();
         }

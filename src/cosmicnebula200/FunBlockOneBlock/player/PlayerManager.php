@@ -34,7 +34,6 @@ class PlayerManager
             'oneblock' => ''
         ]);
         $this->players[$player->getName()] = new Player($player->getName(), '');
-        FunBlockOneBlock::getInstance()->getDataBase()->waitAll();
     }
 
     public function getPlayer(P $player): Player
