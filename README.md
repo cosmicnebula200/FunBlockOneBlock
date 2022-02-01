@@ -16,6 +16,11 @@
 - Fully customizable (including messages and levels 🥺 )
 - Lucky Block support (coming as FunBlockLuckyBlock plugin)
 
+# Todo
+- [❌] Chests with items on block generation 
+- [❌] Mobs with no AI to be spawned with some blocks on configurable levels
+- Suggest more stuff so it can come here
+
 # Permissions
 ```
   funblockoneblock.command:
