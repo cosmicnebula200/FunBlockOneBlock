@@ -12,6 +12,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\player\PlayerChunkLoader;
 use pocketmine\scheduler\ClosureTask;
+use pocketmine\world\Position;
 use Ramsey\Uuid\Uuid;
 
 class CreateSubCommand extends BaseSubCommand
@@ -42,10 +43,10 @@ class CreateSubCommand extends BaseSubCommand
         $chunkZ = $world->getSpawnLocation()->getZ() >> 4;
         $world->requestChunkPopulation($chunkX, $chunkZ, new PlayerChunkLoader($world->getSpawnLocation()))->onCompletion(
             function () use ($world, $sender, $id, $player, $args){
-                $world->setBlock($world->getSpawnLocation(), VanillaBlocks::GRASS());
-                $world->setBlock($world->getSpawnLocation()->subtract(0, 1,0), VanillaBlocks::BARRIER());
-                $sender->teleport($world->getSpawnLocation());
-                $sender->teleport($world->getSpawnLocation()->add(0, 1, 0));
+                $spawnLocation = $world->getSpawnLocation();
+                $world->setBlock($spawnLocation, VanillaBlocks::GRASS());
+                $world->setBlock($spawnLocation->down(), VanillaBlocks::BARRIER());
+                $sender->teleport(Position::fromObject($spawnLocation->up(), $world));
                 FunBlockOneBlock::getInstance()->getOneBlockManager()->makeOneBlock($id, $player, $args['name'], $world);
             }, function () {
                 // NOthing
