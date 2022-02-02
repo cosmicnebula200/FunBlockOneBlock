@@ -15,6 +15,7 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\Food;
 use pocketmine\player\Player as P;
 use pocketmine\scheduler\ClosureTask;
@@ -31,6 +32,15 @@ class EventListener implements Listener
         $player = FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayerByPrefix($event->getPlayer()->getName());
         if (!$player instanceof Player)
             FunBlockOneBlock::getInstance()->getPlayerManager()->loadPlayer($event->getPlayer());
+    }
+
+    /**
+     * @param PlayerQuitEvent $event
+     * @return void
+     */
+    public function onLeave(PlayerQuitEvent $event): void
+    {
+        FunBlockOneBlock::getInstance()->getPlayerManager()->unloadPlayer($event->getPlayer());
     }
 
     /**
