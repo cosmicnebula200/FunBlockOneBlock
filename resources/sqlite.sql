@@ -6,29 +6,35 @@
 -- # { init
 CREATE TABLE IF NOT EXISTS funblockoneblock_player
 (
-    name VARCHAR(32) PRIMARY KEY,
+    uuid VARCHAR(32) PRIMARY KEY,
+    name VARCHAR(32),
     oneblock STRING DEFAULT ''
     );
 -- # }
 
 -- # { load
+-- #    :uuid string
 SELECT *
-FROM funblockoneblock_player;
+FROM funblockoneblock_player
+WHERE uuid=:uuid;
 -- # }
 
 -- # { create
+-- #   :uuid string
 -- #   :name string
 -- #   :oneblock string
-INSERT INTO funblockoneblock_player (name, oneblock)
-VALUES (:name, :oneblock);
+INSERT INTO funblockoneblock_player (uuid, name, oneblock)
+VALUES (:uuid, :name, :oneblock);
 -- # }
 
 -- # { update
+-- #    :uuid string
 -- #    :name string
 -- #    :oneblock string
 UPDATE funblockoneblock_player
-SET oneblock=:oneblock
-WHERE name=:name;
+SET oneblock=:oneblock,
+    name=:name
+WHERE uuid=:uuid;
 -- # }
 
 -- # }
@@ -38,7 +44,8 @@ WHERE name=:name;
 -- # { init
 CREATE TABLE IF NOT EXISTS funblockoneblock_oneblock
 (
-    name VARCHAR(32) PRIMARY KEY,
+    uuid VARCHAR(32) PRIMARY KEY,
+    name VARCHAR(32),
     leader VARCHAR(32),
     members STRING,
     world STRING,
@@ -50,11 +57,14 @@ CREATE TABLE IF NOT EXISTS funblockoneblock_oneblock
 -- # }
 
 -- # { load
+-- #    :uuid string
 SELECT *
-FROM funblockoneblock_oneblock;
+FROM funblockoneblock_oneblock
+WHERE uuid=:uuid;
 -- # }
 
 -- # { create
+-- #   :uuid string
 -- #   :name string
 -- #   :leader string
 -- #   :members string
@@ -63,35 +73,37 @@ FROM funblockoneblock_oneblock;
 -- #   :level int
 -- #   :settings string
 -- #   :spawn string
-INSERT INTO funblockoneblock_oneblock (name, leader, members, world, xp, level, settings, spawn)
-VALUES (:name, :leader, :members, :world, :xp, :level, :settings, :spawn);
+INSERT INTO funblockoneblock_oneblock (uuid, name, leader, members, world, xp, level, settings, spawn)
+VALUES (:uuid, :name, :leader, :members, :world, :xp, :level, :settings, :spawn);
 -- # }
 
 -- # { delete
--- #   :name string
+-- #   :uuid string
 DELETE
 FROM funblockoneblock_oneblock
-WHERE name=:name
+WHERE uuid=:uuid
 -- # }
 
 -- # { update
--- #        :name string
--- #        :leader string
--- #        :members string
--- #        :world string
--- #        :xp int
--- #        :level int
--- #        :settings string
--- #        :spawn string
+-- #    :uuid string
+-- #    :name string
+-- #    :leader string
+-- #    :members string
+-- #    :world string
+-- #    :xp int
+-- #    :level int
+-- #    :settings string
+-- #    :spawn string
 UPDATE funblockoneblock_oneblock
-SET leader=:leader,
+SET name=:name,
+    leader=:leader,
     members=:members,
     world=:world,
     xp=:xp,
     level=:level,
     settings=:settings,
     spawn=:spawn
-WHERE name=:name;
+WHERE uuid=:uuid;
 -- # }
 
 -- # }

@@ -28,7 +28,7 @@ class GoSubCommand extends BaseSubCommand
             $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-ob-go'));
             return;
         }
-        $spawn = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlock)->getSpawn();
-        $sender->teleport(Position::fromObject($spawn->up(), FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName(FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlock)->getWorld())));
+        $spawn = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByUuid($oneBlock)->getSpawn();
+        $sender->teleport(Position::fromObject($spawn->up(), FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName(FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByUuid($oneBlock)->getWorld())));
     }
 }

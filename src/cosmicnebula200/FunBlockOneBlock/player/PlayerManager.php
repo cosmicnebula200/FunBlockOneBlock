@@ -13,27 +13,40 @@ class PlayerManager
     /**@var Player[]*/
     private array $players = [];
 
-    public function __construct()
+    public function loadPlayer(P $player)
     {
         FunBlockOneBlock::getInstance()->getDataBase()->executeSelect(
             'funblockoneblock.player.load',
-            [],
-            function (array $rows): void
+            [
+                'uuid' => $player->getUniqueId()->toString()
+            ],
+            function (array $rows) use ($player): void
             {
-                foreach ($rows as $row)
-                    $this->players[$row['name']] = new Player($row['name'], $row['oneblock']);
+                if (count($rows) == 0) {
+                    $this->createPlayer($player);
+                    return;
+                }
+                $this->players[$rows[0]['name']] = new Player($rows[0]['uuid'], $rows[0]['name'], $rows[0]['oneblock']);
+                FunBlockOneBlock::getInstance()->getOneBlockManager()->loadOneBlock($rows[0]['oneblock']);
             }
         );
+    }
+
+    public function unloadPlayer(P $player)
+    {
+        FunBlockOneBlock::getInstance()->getOneBlockManager()->unloadOneBlock($this->getPlayer($player)->getOneBlock());
+        unset($this->players[$player->getName()]);
     }
 
     public function createPlayer(P $player): void
     {
         FunBlockOneBlock::getInstance()->getDataBase()->executeInsert('funblockoneblock.player.create',
         [
+            'uuid' => $player->getUniqueId()->toString(),
             'name' => $player->getName(),
             'oneblock' => ''
         ]);
-        $this->players[$player->getName()] = new Player($player->getName(), '');
+        $this->players[$player->getName()] = new Player($player->getUniqueId()->toString(), $player->getName(), '');
     }
 
     public function getPlayer(P $player): Player

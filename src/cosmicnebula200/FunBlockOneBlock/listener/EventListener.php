@@ -30,7 +30,7 @@ class EventListener implements Listener
     {
         $player = FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayerByPrefix($event->getPlayer()->getName());
         if (!$player instanceof Player)
-            FunBlockOneBlock::getInstance()->getPlayerManager()->createPlayer($event->getPlayer());
+            FunBlockOneBlock::getInstance()->getPlayerManager()->loadPlayer($event->getPlayer());
     }
 
     /**

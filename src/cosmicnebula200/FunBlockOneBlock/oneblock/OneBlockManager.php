@@ -17,30 +17,47 @@ class OneBlockManager
     /** @var array */
     private array $worlds = [];
 
-    public function __construct()
+    public function loadOneBlock(string $uuid): void
     {
         FunBlockOneBlock::getInstance()->getDataBase()->executeSelect(
             'funblockoneblock.oneblock.load',
-            [],
-            function (array $rows): void
+            [
+                'uuid' => $uuid
+            ],
+            function (array $rows) use ($uuid): void
             {
-                foreach ($rows as $row)
-                {
-                    $spawn = (array)json_decode($row['spawn']);
-                    $this->oneBlocks[$row['name']] = new OneBlock($row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $row['xp'], $row['level'], (array)json_decode($row['settings']), new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
-                    $this->worlds[] = $row['world'];
-                }
+                if (count($rows) == 0)
+                    return;
+                $row = $rows[0];
+                if (isset($this->oneBlocks['name']))
+                    return;
+                $spawn = (array)json_decode($row['spawn']);
+                $this->oneBlocks[$row['uuid']] = new OneBlock($row['uuid'], $row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $row['xp'], $row['level'], (array)json_decode($row['settings']), new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
+                FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->loadWorld($row['world']);
+                $this->worlds[] = $row['world'];
             }
         );
     }
 
-    public function makeOneBlock(Player $player, string $name, World $world): void
+    public function unloadOneBlock(string $uuid)
+    {
+        foreach ($this->getOneBlockByUuid($uuid)->getMembers() as $member)
+        {
+            if (FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayerByPrefix($member) instanceof Player)
+                return;
+        }
+        FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->unloadWorld(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($this->getOneBlockByUuid($uuid)->getWorld()));
+        unset($this->oneBlocks[$uuid]);
+    }
+
+    public function makeOneBlock(string $uuid, Player $player, string $name, World $world): void
     {
         $spawn = $world->getSpawnLocation();
-        $oneBlock = new OneBlock($name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, ['visit' => true, 'pvp' => false], $spawn);
+        $oneBlock = new OneBlock($uuid, $name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, ['visit' => true, 'pvp' => false], $spawn);
         $this->oneBlocks[$name] = $oneBlock;
         $this->worlds[] = $world->getFolderName();
         FunBlockOneBlock::getInstance()->getDataBase()->executeInsert('funblockoneblock.oneblock.create', [
+            'uuid' => $uuid,
             'name' => $name,
             'leader' => $player->getName(),
             'members' => implode(',', [$player->getName()]),
@@ -57,9 +74,19 @@ class OneBlockManager
         $oneBlock->save();
     }
 
+    public function getOneBlockByUuid(string $uuid): ?OneBlock
+    {
+        return $this->oneBlocks[$uuid] ?? null;
+    }
+
     public function getOneBlock(string $name): ?OneBlock
     {
-        return $this->oneBlocks[$name] ?? null;
+        foreach ($this->oneBlocks as $oneBlock)
+        {
+            if ($oneBlock->getName() == $name)
+                return $oneBlock;
+        }
+        return null;
     }
 
     public function getOneBlockByWorld(World $world): ?OneBlock
@@ -79,15 +106,14 @@ class OneBlockManager
         return false;
     }
 
-    public function deleteOneBlock(string $oneBlock): void
+    public function deleteOneBlock(string $uuid): void
     {
-        unset($this->oneBlocks[$oneBlock]);
+        unset($this->oneBlocks[$uuid]);
         FunBlockOneBlock::getInstance()->getDataBase()->executeGeneric(
             'funblockoneblock.oneblock.delete', [
-                'name' => $oneBlock
+                'uuid' => $uuid
             ]
         );
-        FunBlockOneBlock::getInstance()->getDataBase()->waitAll();
     }
 
 }

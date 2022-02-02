@@ -34,17 +34,17 @@ class CreateSubCommand extends BaseSubCommand
         }
         $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('world-generating'));
         $id = Uuid::uuid4()->toString();
-        $player->setOneBlock($args['name']);
+        $player->setOneBlock($id);
         FunBlockOneBlock::getInstance()->getGenerator()->generateWorld($id);
         $world = FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($id);
-        FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($sender, $world, $player, $args): void {
+        FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($id, $sender, $world, $player, $args): void {
             $sender->teleport($world->getSpawnLocation());
             $sender->teleport($sender->getWorld()->getSpawnLocation()->add(0, 1, 0));
             $sender->setImmobile(true);
             $sender->getWorld()->setBlock($world->getSpawnLocation(), VanillaBlocks::DIRT());
             $sender->getWorld()->setBlock($world->getSpawnLocation()->subtract(0,1,0), VanillaBlocks::BARRIER());
             $sender->setImmobile(false);
-            FunBlockOneBlock::getInstance()->getOneBlockManager()->makeOneBlock($player, $args['name'], $world);
+            FunBlockOneBlock::getInstance()->getOneBlockManager()->makeOneBlock($id, $player, $args['name'], $world);
         }), 100);
     }
 

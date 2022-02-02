@@ -12,7 +12,7 @@ class OneBlock
 {
 
     /**@var string*/
-    private string $name, $leader, $world;
+    private string $uuid, $name, $leader, $world;
     /**@var array*/
     private array $members;
     /**@var int*/
@@ -24,8 +24,9 @@ class OneBlock
     /**@var Vector3*/
     private Vector3 $spawn;
 
-    public function __construct(string $name, string $leader, array $members, string $world, int $xp, int $level, array $settings, Vector3 $spawn)
+    public function __construct(string $uuid, string $name, string $leader, array $members, string $world, int $xp, int $level, array $settings, Vector3 $spawn)
     {
+        $this->uuid = $uuid;
         $this->name = $name;
         $this->leader = $leader;
         $this->members = $members;
@@ -34,6 +35,14 @@ class OneBlock
         $this->level = FunBlockOneBlock::getInstance()->getLevelManager()->getLevel($level);
         $this->settings = $settings;
         $this->spawn = $spawn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**
@@ -173,7 +182,15 @@ class OneBlock
 
     public function save(): void
     {
+        $spawn = [
+            'x' => $this->spawn->getX(),
+            'y' => $this->spawn->getY(),
+            'z' => $this->spawn->getZ()
+        ];
+        var_dump(json_encode($spawn, JSON_PRETTY_PRINT));
+        var_dump(json_encode($this->settings, JSON_PRETTY_PRINT));
         FunBlockOneBlock::getInstance()->getDataBase()->executeChange('funblockoneblock.oneblock.update', [
+            'uuid' => $this->uuid,
             'name' => $this->name,
             'leader' => $this->leader,
             'members' => implode(',', $this->members),
@@ -181,11 +198,7 @@ class OneBlock
             'xp' => $this->xp,
             'level' => $this->level->asInt(),
             'settings' => json_encode($this->settings),
-            'spawn' => json_encode([
-                'x' => $this->spawn->getX(),
-                'y' => $this->spawn->getY(),
-                'z' => $this->spawn->getZ()
-            ])
+            'spawn' => json_encode($spawn)
         ]);
     }
 

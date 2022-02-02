@@ -10,12 +10,21 @@ class Player
 {
 
     /**@var string*/
-    private string $name, $oneBlock;
+    private string $uuid, $name, $oneBlock;
 
-    public function __construct(string $name, string $oneBlock)
+    public function __construct(string $uuid, string $name, string $oneBlock)
     {
+        $this->uuid = $uuid;
         $this->name = $name;
         $this->oneBlock = $oneBlock;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     public function getName(): string
@@ -37,6 +46,7 @@ class Player
     public function save(): void
     {
         FunBlockOneBlock::getInstance()->getDataBase()->executeChange('funblockoneblock.player.update', [
+            'uuid' => $this->uuid,
             'name' => $this->name,
             'oneblock' => $this->oneBlock
         ]);
