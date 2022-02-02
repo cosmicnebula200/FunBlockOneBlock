@@ -24,7 +24,7 @@ class OneBlockManager
             [
                 'uuid' => $uuid
             ],
-            function (array $rows) use ($uuid): void
+            function (array $rows): void
             {
                 if (count($rows) == 0)
                     return;
