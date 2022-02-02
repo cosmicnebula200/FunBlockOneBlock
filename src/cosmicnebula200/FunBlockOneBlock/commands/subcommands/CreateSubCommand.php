@@ -10,6 +10,7 @@ use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
+use pocketmine\player\PlayerChunkLoader;
 use pocketmine\scheduler\ClosureTask;
 use Ramsey\Uuid\Uuid;
 
@@ -37,15 +38,19 @@ class CreateSubCommand extends BaseSubCommand
         $player->setOneBlock($id);
         FunBlockOneBlock::getInstance()->getGenerator()->generateWorld($id);
         $world = FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($id);
-        FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($id, $sender, $world, $player, $args): void {
-            $sender->teleport($world->getSpawnLocation());
-            $sender->teleport($sender->getWorld()->getSpawnLocation()->add(0, 1, 0));
-            $sender->setImmobile(true);
-            $sender->getWorld()->setBlock($world->getSpawnLocation(), VanillaBlocks::DIRT());
-            $sender->getWorld()->setBlock($world->getSpawnLocation()->subtract(0,1,0), VanillaBlocks::BARRIER());
-            $sender->setImmobile(false);
-            FunBlockOneBlock::getInstance()->getOneBlockManager()->makeOneBlock($id, $player, $args['name'], $world);
-        }), 100);
+        $chunkX = $world->getSpawnLocation()->getX() >> 4;
+        $chunkZ = $world->getSpawnLocation()->getZ() >> 4;
+        $world->requestChunkPopulation($chunkX, $chunkZ, new PlayerChunkLoader($world->getSpawnLocation()))->onCompletion(
+            function () use ($world, $sender, $id, $player, $args){
+                $world->setBlock($world->getSpawnLocation(), VanillaBlocks::GRASS());
+                $world->setBlock($world->getSpawnLocation()->subtract(0, 1,0), VanillaBlocks::BARRIER());
+                $sender->teleport($world->getSpawnLocation());
+                $sender->teleport($world->getSpawnLocation()->add(0, 1, 0));
+                FunBlockOneBlock::getInstance()->getOneBlockManager()->makeOneBlock($id, $player, $args['name'], $world);
+            }, function () {
+                // NOthing
+            }
+        );
     }
 
 }
