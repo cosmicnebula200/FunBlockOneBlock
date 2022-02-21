@@ -16,6 +16,8 @@ class OneBlockManager
     private array $oneBlocks = [];
     /** @var array */
     private array $worlds = [];
+    /** @var string[] */
+    private array $names = [];
 
     public function loadOneBlock(string $uuid): void
     {
@@ -29,12 +31,13 @@ class OneBlockManager
                 if (count($rows) == 0)
                     return;
                 $row = $rows[0];
-                if (isset($this->oneBlocks['name']))
+                if (isset($this->oneBlocks[$row['uuid']]))
                     return;
                 $spawn = (array)json_decode($row['spawn']);
                 $this->oneBlocks[$row['uuid']] = new OneBlock($row['uuid'], $row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $row['xp'], $row['level'], (array)json_decode($row['settings']), new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
                 FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->loadWorld($row['world']);
-                $this->worlds[] = $row['world'];
+                $this->worlds[$row['world']] = $row['uuid'];
+                $this->names[$row['uuid']] = $row['uuid'];
             }
         );
     }
@@ -47,6 +50,9 @@ class OneBlockManager
                 return;
         }
         FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->unloadWorld(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($this->getOneBlockByUuid($uuid)->getWorld()));
+        $oneBlock = $this->getOneBlockByUuid($uuid);
+        unset($this->worlds[$oneBlock->getWorld()]);
+        unset($this->names[$oneBlock->getName()]);
         unset($this->oneBlocks[$uuid]);
     }
 
@@ -81,27 +87,21 @@ class OneBlockManager
 
     public function getOneBlock(string $name): ?OneBlock
     {
-        foreach ($this->oneBlocks as $oneBlock)
-        {
-            if ($oneBlock->getName() == $name)
-                return $oneBlock;
-        }
+        if (isset($this->names[$name]))
+            $this->getOneBlockByUuid($this->names[$name]) ?? null;
         return null;
     }
 
     public function getOneBlockByWorld(World $world): ?OneBlock
     {
-        foreach ($this->oneBlocks as $oneBlock)
-        {
-            if ($oneBlock->getWorld() == $world->getDisplayName())
-                return $oneBlock;
-        }
+        if (isset($this->worlds[$world->getFolderName()]))
+            return $this->oneBlocks[$world->getFolderName()] ?? null;
         return null;
     }
 
     public function isOneBlockWorld(string $world): bool
     {
-        if (in_array($world, $this->worlds))
+        if (isset($this->worlds[$world]))
             return true;
         return false;
     }
