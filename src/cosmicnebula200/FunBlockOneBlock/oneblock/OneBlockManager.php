@@ -88,7 +88,7 @@ class OneBlockManager
     public function getOneBlock(string $name): ?OneBlock
     {
         if (isset($this->names[$name]))
-            $this->getOneBlockByUuid($this->names[$name]) ?? null;
+            return $this->getOneBlockByUuid($this->names[$name]) ?? null;
         return null;
     }
 
