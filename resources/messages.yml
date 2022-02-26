@@ -30,3 +30,6 @@ messages:
   create: "successfully created an island"
   visit: "visiting {NAME}'s OneBlock Island"
   delete: 'deleted your OneBlock Island successfully'
+  toggle-chat: "toggled island chat"
+
+oneblock-chat: "&d[FunBlockOneBlock] &e[{PLAYER}] &6=> {MSG}"

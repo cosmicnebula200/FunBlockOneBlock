@@ -13,6 +13,7 @@ use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
@@ -157,6 +158,27 @@ class EventListener implements Listener
         };
         if (FunBlockOneBlock::getInstance()->getConfig()->getNested("settings.damage.$type", true))
             $event->cancel();
+    }
+
+    public function onChat(PlayerChatEvent $event): void
+    {
+        if (!in_array($event->getPlayer(), FunBlockOneBlock::getInstance()->getChat()))
+            return;
+        $oneBlock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByUuid(FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayer($event->getPlayer())->getOneBlock());
+        if (!$oneBlock instanceof OneBlock)
+        {
+            FunBlockOneBlock::getInstance()->removePlayerFromChat($event->getPlayer());
+            $event->getPlayer()->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage("toggle-chat"));
+            return;
+        }
+        foreach ($oneBlock->getMembers() as $member)
+        {
+            $m = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($member);
+            if (!$m instanceof P)
+                continue;
+            $m->sendMessage(str_replace(["{PLAYER}", "{MSG}"], [$event->getPlayer()->getName(), $event->getMessage()], FunBlockOneBlock::getInstance()->getMessages()->getMessageConfig()->get("oneblock-chat", "&d[FunBlockOneBlock] &e[{PLAYER}] &6=> {MSG}")));
+        }
+        $event->cancel();
     }
 
 }

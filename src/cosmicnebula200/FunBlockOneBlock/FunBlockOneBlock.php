@@ -12,8 +12,10 @@ use cosmicnebula200\FunBlockOneBlock\level\LevelManager;
 use cosmicnebula200\FunBlockOneBlock\listener\EventListener;
 use cosmicnebula200\FunBlockOneBlock\messages\Messages;
 use cosmicnebula200\FunBlockOneBlock\oneblock\OneBlockManager;
+use cosmicnebula200\FunBlockOneBlock\player\Player;
 use cosmicnebula200\FunBlockOneBlock\player\PlayerManager;
 use pocketmine\plugin\PluginBase;
+use pocketmine\player\Player as P;
 use poggit\libasynql\DataConnector;
 use poggit\libasynql\libasynql;
 
@@ -26,6 +28,8 @@ class FunBlockOneBlock extends PluginBase
     private Generator $generator;
     /** @var Messages */
     private Messages $messages;
+    /** @var P[] */
+    private array $chat;
     /** @var PlayerManager */
     private PlayerManager $playerManager;
     /** @var OneBlockManager */
@@ -52,6 +56,7 @@ class FunBlockOneBlock extends PluginBase
         $this->saveResource('forms.yml');
         $this->initDataBase();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
+        $this->chat = [];
         $this->generator = new Generator();
         $this->messages = new Messages();
         $this->playerManager = new PlayerManager();
@@ -74,6 +79,24 @@ class FunBlockOneBlock extends PluginBase
         $db->executeGeneric('funblockoneblock.oneblock.init');
         $db->waitAll();
         $this->dataConnector = $db;
+    }
+
+    /**
+     * @return P[]
+     */
+    public function getChat(): array
+    {
+        return $this->chat;
+    }
+
+    public function addPlayerToChat(P $player): void
+    {
+        $this->chat[] = $player->getName();
+    }
+
+    public function removePlayerFromChat(P $player): void
+    {
+        unset($this->chat[array_search($player->getName(), $this->chat)]);
     }
 
     /**
