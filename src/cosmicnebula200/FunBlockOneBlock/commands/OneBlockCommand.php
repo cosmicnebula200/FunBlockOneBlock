@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace cosmicnebula200\FunBlockOneBlock\commands;
 
 use CortexPE\Commando\BaseCommand;
+use cosmicnebula200\FunBlockOneBlock\commands\subcommands\ChatSubCommand;
 use cosmicnebula200\FunBlockOneBlock\commands\subcommands\AcceptSubCommand;
 use cosmicnebula200\FunBlockOneBlock\commands\subcommands\CreateSubCommand;
 use cosmicnebula200\FunBlockOneBlock\commands\subcommands\DeleteSubCommand;
@@ -25,6 +26,7 @@ class OneBlockCommand extends BaseCommand
         $this->registerSubCommand(new GoSubCommand('go', 'Teleports to the users OneBlock island'));
         $this->registerSubCommand(new InviteSubCommand('invite', 'Invites the mentioned player to your island'));
         $this->registerSubCommand(new VisitSubCommand('visit', 'Visits the mentioned players island'));
+        $this->registerSubCommand(new ChatSubCommand('visit', 'Chat with your oneblock members'));
     }
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
