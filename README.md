@@ -4,11 +4,11 @@
 <a href="https://github.com/cosmicnebula200/FunBlockOneBlock" target="_blank"><img src="https://media.discordapp.net/attachments/829673511009779723/918506120094564392/png_20211209_221513_0000.png?width=240&height=240"></a>
 </p>
 
- A OneBlock plugin for PocketMine-4.0.0
- 
- **What is OneBlock?**
- 
- OneBlock is a survival gamemode in which you stand on a lonely block floating in the void. You can mine the same block over and over, and it gives you basic materials that slowly become better and better. You go through certain phases, and the infinite block slowly upgrades to better blocks and this continues forever and ever.
+A OneBlock plugin for PocketMine-4.0.0
+
+**What is OneBlock?**
+
+OneBlock is a survival gamemode in which you stand on a lonely block floating in the void. You can mine the same block over and over, and it gives you basic materials that slowly become better and better. You go through certain phases, and the infinite block slowly upgrades to better blocks and this continues forever and ever.
 
 # Features
 - MySql and Sqlite3 providers
@@ -17,7 +17,7 @@
 - Lucky Block support (coming as FunBlockLuckyBlock plugin)
 
 # Todo
-- [❌] Chests with items on block generation 
+- [❌] Chests with items on block generation
 - [❌] Mobs with no AI to be spawned with some blocks on configurable levels
 - Suggest more stuff so it can come here
 
@@ -72,6 +72,6 @@ autoinv.enable | Enables the autoinventory **ON THE ONEBLOCK ISLANDS** | boolean
 autoinv.drop-when-full| Drops items on ground when the player has a full inventory | boolean (true/false)
 autoxp| Automatically sends xp on Mining on the OneBlock Islands | boolean (true/false)
 invite-time-out | The number of seconds to wait before an invite to a OneBlock Island expires | int (in seconds)
-max-members | The maximum number of players a OneBlock Island can have . This value includes the Leader too | int 
+max-members | The maximum number of players a OneBlock Island can have . This value includes the Leader too | int
 reset-xp | Reset xp upon level-ups | boolean (true/false)
 damage | Toggles damages on OneBlock Island. **Here false means they wont take damage due to that cause** | boolean (true/false)

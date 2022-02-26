@@ -34,7 +34,9 @@ class PlayerManager
 
     public function unloadPlayer(P $player)
     {
-        FunBlockOneBlock::getInstance()->getOneBlockManager()->unloadOneBlock($this->getPlayer($player)->getOneBlock());
+        $oneBlock = $this->getPlayer($player)->getOneBlock();
+        if ($oneBlock !== '')
+            FunBlockOneBlock::getInstance()->getOneBlockManager()->unloadOneBlock($oneBlock);
         unset($this->players[$player->getName()]);
     }
 

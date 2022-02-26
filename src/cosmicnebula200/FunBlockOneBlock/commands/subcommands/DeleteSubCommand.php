@@ -39,7 +39,7 @@ class DeleteSubCommand extends BaseSubCommand
             $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-island'));
             return;
         }
-        $oneBlock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlock($oneBlockPlayer->getOneBlock());
+        $oneBlock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByUuid($oneBlockPlayer->getOneBlock());
         foreach ($oneBlock->getMembers() as $member)
         {
             $player = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($member);

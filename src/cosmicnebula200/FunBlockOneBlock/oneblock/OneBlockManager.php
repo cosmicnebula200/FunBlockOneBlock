@@ -37,7 +37,7 @@ class OneBlockManager
                 $this->oneBlocks[$row['uuid']] = new OneBlock($row['uuid'], $row['name'], $row['leader'], explode(',', $row['members']), $row['world'], $row['xp'], $row['level'], (array)json_decode($row['settings']), new Vector3($spawn["x"], $spawn["y"], $spawn['z']));
                 FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->loadWorld($row['world']);
                 $this->worlds[$row['world']] = $row['uuid'];
-                $this->names[$row['uuid']] = $row['uuid'];
+                $this->names[$row['name']] = $row['uuid'];
             }
         );
     }
@@ -60,8 +60,9 @@ class OneBlockManager
     {
         $spawn = $world->getSpawnLocation();
         $oneBlock = new OneBlock($uuid, $name, $player->getName(), [$player->getName()], $world->getFolderName(), 0, 1, ['visit' => true, 'pvp' => false], $spawn);
-        $this->oneBlocks[$name] = $oneBlock;
-        $this->worlds[] = $world->getFolderName();
+        $this->oneBlocks[$uuid] = $oneBlock;
+        $this->worlds[$world->getFolderName()] = $uuid;
+        $this->names[$name] = $uuid;
         FunBlockOneBlock::getInstance()->getDataBase()->executeInsert('funblockoneblock.oneblock.create', [
             'uuid' => $uuid,
             'name' => $name,
@@ -108,6 +109,9 @@ class OneBlockManager
 
     public function deleteOneBlock(string $uuid): void
     {
+        $oneBlock = $this->getOneBlockByUuid($uuid);
+        unset($this->names[$oneBlock->getName()]);
+        unset($this->worlds[$oneBlock->getWorld()]);
         unset($this->oneBlocks[$uuid]);
         FunBlockOneBlock::getInstance()->getDataBase()->executeGeneric(
             'funblockoneblock.oneblock.delete', [

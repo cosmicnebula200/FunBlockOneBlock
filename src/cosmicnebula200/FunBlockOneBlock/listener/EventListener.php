@@ -86,6 +86,9 @@ class EventListener implements Listener
                 if ($newXP >= $oneblock->getLevel()->getLevelUpXp() && $newLevel instanceof Level)
                 {
                     $oneblock->setLevel($newLevel);
+                    $event->getPlayer()->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage("level-up", [
+                        "level" => $newLevel->getName()
+                    ]));
                     if (FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.reset-xp'))
                     {
                         $oneblock->setXp($newXP - $oneblock->getLevel()->getLevelUpXp());
