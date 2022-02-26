@@ -26,7 +26,7 @@ class OneBlockCommand extends BaseCommand
         $this->registerSubCommand(new GoSubCommand('go', 'Teleports to the users OneBlock island'));
         $this->registerSubCommand(new InviteSubCommand('invite', 'Invites the mentioned player to your island'));
         $this->registerSubCommand(new VisitSubCommand('visit', 'Visits the mentioned players island'));
-        $this->registerSubCommand(new ChatSubCommand('visit', 'Chat with your oneblock members'));
+        $this->registerSubCommand(new ChatSubCommand('chat', 'Chat with your oneblock members'));
     }
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
