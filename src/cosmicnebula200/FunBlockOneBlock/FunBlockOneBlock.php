@@ -91,7 +91,7 @@ class FunBlockOneBlock extends PluginBase
 
     public function addPlayerToChat(P $player): void
     {
-        $this->chat[] = $player->getName();
+        $this->chat[] = $player;
     }
 
     public function removePlayerFromChat(P $player): void
