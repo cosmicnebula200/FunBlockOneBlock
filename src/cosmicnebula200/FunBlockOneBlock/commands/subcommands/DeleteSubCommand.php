@@ -47,7 +47,7 @@ class DeleteSubCommand extends BaseSubCommand
                 $player->teleport(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
             FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayerByPrefix($member)->setOneBlock('');
         }
-        FunBlockOneBlock::getInstance()->getOneBlockManager()->deleteOneBlock($oneBlock->getName());
+        FunBlockOneBlock::getInstance()->getOneBlockManager()->deleteOneBlock($oneBlock->getUuid());
         $world = FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getWorldByName($oneBlock->getWorld());
         foreach ($world->getPlayers() as $p)
             $p->teleport(FunBlockOneBlock::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSpawnLocation());
