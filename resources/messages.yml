@@ -33,3 +33,5 @@ messages:
   toggle-chat: "toggled island chat"
 
 oneblock-chat: "&d[FunBlockOneBlock] &e[{PLAYER}] &6=> {MSG}"
+
+xp-gain: "&a[+] {AMOUNT} xp added"

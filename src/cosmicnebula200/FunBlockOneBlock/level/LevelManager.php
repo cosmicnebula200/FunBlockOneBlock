@@ -30,7 +30,7 @@ class LevelManager
                 {
                     $blockArray[] = "$block:{$value['meta']}";
                 }
-                $xpArray[] = $value['xp'];
+                $xpArray[$block] = $value['xp'];
             }
             shuffle($blockArray);
             $this->levels[$level] = new Level($level, $data['name'], $data['levelup'], $blockArray, $xpArray);

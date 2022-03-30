@@ -83,13 +83,17 @@ class EventListener implements Listener
         {
             if ($oneblock->getLevel()->getBlockXp($event->getBlock()) !== null)
             {
+                $xp = $oneblock->getLevel()->getBlockXp($event->getBlock());
+                if ($xp == 0)
+                    return;
+                $event->getPlayer()->sendActionBarMessage(TextFormat::colorize(str_replace("{AMOUNT}", (string)$xp, FunBlockOneBlock::getInstance()->getMessages()->getMessageConfig()->get('xp-gain', '&a[+] {AMOUNT} xp added'))));
                 $newXP = $oneblock->getXp() + $oneblock->getLevel()->getBlockXp($event->getBlock());
                 $newLevel = FunBlockOneBlock::getInstance()->getLevelManager()->getLevel($oneblock->getLevel()->asInt() + 1);
                 if ($newXP >= $oneblock->getLevel()->getLevelUpXp() && $newLevel instanceof Level)
                 {
                     $oneblock->setLevel($newLevel);
                     $event->getPlayer()->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage("level-up", [
-                        "level" => $newLevel->getName()
+                        "{LEVEL}" => $newLevel->getName()
                     ]));
                     if (FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.reset-xp'))
                     {
