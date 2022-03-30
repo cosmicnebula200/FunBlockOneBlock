@@ -29,12 +29,15 @@ OneBlock is a survival gamemode in which you stand on a lonely block floating in
   funblockoneblock.create:
     default: true
     description: this permission allows the user to create a oneblock island
+  funblockoneblock.chat:
+    default: true
+    description: this permission allows the user to use the oneblock chat
   funblockoneblock.delete:
     default: true
-    description: with this permission the user can delete their island
+    description: with this permission the user can delete their oneblock island
   funblockoneblock.deleteothers:
     default: op
-    description: with this permission the user can delete other players one islands
+    description: with this permission the user can delete other players oneblock islands
   funblockoneblock.go:
     default: true
     description: this permission allows the user to teleport to the oneblock island
