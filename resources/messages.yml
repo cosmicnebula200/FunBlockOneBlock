@@ -14,7 +14,7 @@ messages:
   world-generating: 'please wait till the world generates'
   player-not-online: 'the mentioned player is not online at the moment or has never joined the server'
   have-ob: 'you have already created a oneblock island'
-  level-up: "you have leveled up yo {LEVEL}"
+  level-up: "you have leveled up to {LEVEL}"
   no-ob: 'you do not have a oneblock island to use this command'
   not-registered: 'the mentioned player has not been registered'
   no-island: 'the mentioned player has no oneblock island'
