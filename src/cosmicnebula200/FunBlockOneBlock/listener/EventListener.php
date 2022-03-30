@@ -20,6 +20,7 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\Food;
 use pocketmine\player\Player as P;
 use pocketmine\scheduler\ClosureTask;
+use pocketmine\utils\TextFormat;
 
 class EventListener implements Listener
 {
@@ -176,7 +177,7 @@ class EventListener implements Listener
             $m = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($member);
             if (!$m instanceof P)
                 continue;
-            $m->sendMessage(str_replace(["{PLAYER}", "{MSG}"], [$event->getPlayer()->getName(), $event->getMessage()], FunBlockOneBlock::getInstance()->getMessages()->getMessageConfig()->get("oneblock-chat", "&d[FunBlockOneBlock] &e[{PLAYER}] &6=> {MSG}")));
+            $m->sendMessage(str_replace(["{PLAYER}", "{MSG}"], [$event->getPlayer()->getName(), $event->getMessage()], TextFormat::colorize(FunBlockOneBlock::getInstance()->getMessages()->getMessageConfig()->get("oneblock-chat", "&d[FunBlockOneBlock] &e[{PLAYER}] &6=> {MSG}"))));
         }
         $event->cancel();
     }
