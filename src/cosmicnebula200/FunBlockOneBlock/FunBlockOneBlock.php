@@ -10,12 +10,18 @@ use cosmicnebula200\FunBlockOneBlock\generator\Generator;
 use cosmicnebula200\FunBlockOneBlock\invites\InviteManager;
 use cosmicnebula200\FunBlockOneBlock\level\LevelManager;
 use cosmicnebula200\FunBlockOneBlock\listener\EventListener;
+use cosmicnebula200\FunBlockOneBlock\listener\TagResolveListener;
 use cosmicnebula200\FunBlockOneBlock\messages\Messages;
 use cosmicnebula200\FunBlockOneBlock\oneblock\OneBlockManager;
 use cosmicnebula200\FunBlockOneBlock\player\Player;
 use cosmicnebula200\FunBlockOneBlock\player\PlayerManager;
+use Ifera\ScoreHud\event\PlayerTagUpdateEvent;
+use Ifera\ScoreHud\scoreboard\ScoreTag;
+use Ifera\ScoreHud\ScoreHud;
+use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginBase;
 use pocketmine\player\Player as P;
+use pocketmine\scheduler\ClosureTask;
 use poggit\libasynql\DataConnector;
 use poggit\libasynql\libasynql;
 
@@ -56,6 +62,15 @@ class FunBlockOneBlock extends PluginBase
         $this->saveResource('forms.yml');
         $this->initDataBase();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
+        if ($this->getConfig()->getNested("settings.scorehud.enabled"))
+            if (class_exists(ScoreHud::class))
+                $this->getServer()->getPluginManager()->registerEvents(new TagResolveListener(), $this);
+            else
+            {
+                $this->getLogger()->warning("You do not have ScoreHud installed, ScoreHud features will be disabled for now");
+                $this->getConfig()->setNested("settings.scorehud.enabled" , false);
+                $this->getConfig()->save();
+            }
         $this->chat = [];
         $this->generator = new Generator();
         $this->messages = new Messages();
@@ -92,6 +107,13 @@ class FunBlockOneBlock extends PluginBase
     public function addPlayerToChat(P $player): void
     {
         $this->chat[] = $player;
+    }
+
+    public function isChatting(P $player): string
+    {
+        if (in_array($player->getName(), $this->chat))
+            return "On";
+        return 'Off';
     }
 
     public function removePlayerFromChat(P $player): void

@@ -16,6 +16,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\Food;
 use pocketmine\player\Player as P;
@@ -26,10 +27,10 @@ class EventListener implements Listener
 {
 
     /**
-     * @param PlayerJoinEvent $event
+     * @param PlayerLoginEvent $event
      * @return void
      */
-    public function onJoin(PlayerJoinEvent $event): void
+    public function onJoin(PlayerLoginEvent $event): void
     {
         $player = FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayerByPrefix($event->getPlayer()->getName());
         if (!$player instanceof Player)
@@ -88,17 +89,24 @@ class EventListener implements Listener
                     return;
                 $event->getPlayer()->sendActionBarMessage(TextFormat::colorize(str_replace("{AMOUNT}", (string)$xp, FunBlockOneBlock::getInstance()->getMessages()->getMessageConfig()->get('xp-gain', '&a[+] {AMOUNT} xp added'))));
                 $newXP = $oneblock->getXp() + $oneblock->getLevel()->getBlockXp($event->getBlock());
+                $prevLevel = $oneblock->getLevel();
                 $newLevel = FunBlockOneBlock::getInstance()->getLevelManager()->getLevel($oneblock->getLevel()->asInt() + 1);
                 $oneblock->setXp($newXP);
+                $event = new XPChangeEvent($event->getPlayer(), $newXP);
+                $event->call();
                 if ($newXP >= $oneblock->getLevel()->getLevelUpXp() && $newLevel instanceof Level)
                 {
                     $oneblock->setLevel($newLevel);
                     $event->getPlayer()->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage("level-up", [
                         "{LEVEL}" => $newLevel->getName()
                     ]));
+                    $event = new LevelChangeEvent($event->getPlayer(), $newLevel->asInt(), $newLevel->getName());
+                    $event->call();
                     if (FunBlockOneBlock::getInstance()->getConfig()->getNested('settings.reset-xp'))
                     {
-                        $oneblock->setXp($newXP - $oneblock->getLevel()->getLevelUpXp());
+                        $oneblock->setXp($newXP - $prevLevel->getLevelUpXp());
+                        $event = new XPChangeEvent($event->getPlayer(), $newXP - $prevLevel->getLevelUpXp());
+                        $event->call();
                     }
                 }
             }

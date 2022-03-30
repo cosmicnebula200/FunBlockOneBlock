@@ -7,6 +7,7 @@ namespace cosmicnebula200\FunBlockOneBlock\commands\subcommands;
 use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseSubCommand;
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
+use cosmicnebula200\FunBlockOneBlock\listener\CreationEvent;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
@@ -48,6 +49,8 @@ class CreateSubCommand extends BaseSubCommand
                 $world->setBlock($spawnLocation->down(), VanillaBlocks::BARRIER());
                 $sender->teleport(Position::fromObject($spawnLocation->up(), $world));
                 FunBlockOneBlock::getInstance()->getOneBlockManager()->makeOneBlock($id, $player, $args['name'], $world);
+                $event = new CreationEvent($sender, FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByUuid($player->getOneBlock()));
+                $event->call();
             }, function () {
                 // NOthing
             }

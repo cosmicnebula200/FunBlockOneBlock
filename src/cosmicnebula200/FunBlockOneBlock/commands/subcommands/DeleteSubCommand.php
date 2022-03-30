@@ -7,6 +7,7 @@ namespace cosmicnebula200\FunBlockOneBlock\commands\subcommands;
 use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseSubCommand;
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
+use cosmicnebula200\FunBlockOneBlock\listener\DeleteEvent;
 use cosmicnebula200\FunBlockOneBlock\player\Player;
 use pocketmine\player\Player as P;
 use pocketmine\command\CommandSender;
@@ -60,6 +61,8 @@ class DeleteSubCommand extends BaseSubCommand
         $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('deleted-ob', [
             "{NAME}" => $oneBlockPlayer->getName()
         ]));
+        $event = new DeleteEvent($oneBlock);
+        $event->call();
     }
 
     public function deleteWorld(string $path, string $previousPath = ''): void

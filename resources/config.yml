@@ -45,3 +45,5 @@ settings:
     fire: true
     void: false
     hunger: true
+  scorehud:
+    enabled: true
