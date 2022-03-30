@@ -89,6 +89,7 @@ class EventListener implements Listener
                 $event->getPlayer()->sendActionBarMessage(TextFormat::colorize(str_replace("{AMOUNT}", (string)$xp, FunBlockOneBlock::getInstance()->getMessages()->getMessageConfig()->get('xp-gain', '&a[+] {AMOUNT} xp added'))));
                 $newXP = $oneblock->getXp() + $oneblock->getLevel()->getBlockXp($event->getBlock());
                 $newLevel = FunBlockOneBlock::getInstance()->getLevelManager()->getLevel($oneblock->getLevel()->asInt() + 1);
+                $oneblock->setXp($newXP);
                 if ($newXP >= $oneblock->getLevel()->getLevelUpXp() && $newLevel instanceof Level)
                 {
                     $oneblock->setLevel($newLevel);
