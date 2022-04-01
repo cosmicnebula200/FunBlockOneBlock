@@ -4,6 +4,7 @@ namespace cosmicnebula200\FunBlockOneBlock\listener;
 
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
 use cosmicnebula200\FunBlockOneBlock\oneblock\OneBlock;
+use Ifera\ScoreHud\event\PlayerTagsUpdateEvent;
 use Ifera\ScoreHud\event\PlayerTagUpdateEvent;
 use Ifera\ScoreHud\event\TagsResolveEvent;
 use Ifera\ScoreHud\scoreboard\ScoreTag;
@@ -27,11 +28,11 @@ class TagResolveListener implements Listener
         $player = FunBlockOneBlock::getInstance()->getPlayerManager()->getPlayer($event->getPlayer());
         $oneBlock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByUuid($player->getOneBlock());
         if (!$oneBlock instanceof OneBlock) {
-            foreach (self::DEFAULT_TAGS as $tag)
-            {
-                $event = new PlayerTagUpdateEvent($event->getPlayer(), new ScoreTag( self::TAG_PREFIX . "$tag", "N/A"));
-                $event->call();;
-            }
+            $tagsArray = [];
+            foreach (self::DEFAULT_TAGS as $t)
+                $tagsArray[] = new ScoreTag(self::TAG_PREFIX . $t, "N/A");
+            $event = new PlayerTagsUpdateEvent($event->getPlayer(), $tagsArray);
+            $event->call();;
             return;
         }
         switch ($tag->getName())
@@ -76,9 +77,11 @@ class TagResolveListener implements Listener
      */
     public function onLevelChange(LevelChangeEvent $event): void
     {
-        $ev = new PlayerTagUpdateEvent($event->getPlayer(), new ScoreTag( self::TAG_PREFIX . 'level', $event->getLevel()));
-        $ev->call();
-        $ev = new PlayerTagUpdateEvent($event->getPlayer(), new ScoreTag( self::TAG_PREFIX . 'level_name', $event->getLevelName()));
+        $ev = new PlayerTagsUpdateEvent(
+            $event->getPlayer(), [
+            new ScoreTag( self::TAG_PREFIX . 'level', $event->getLevel()),
+            new ScoreTag( self::TAG_PREFIX . 'level_name', $event->getLevelName())
+        ]);
         $ev->call();
     }
 
@@ -95,11 +98,11 @@ class TagResolveListener implements Listener
                 $player = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($member);
                 if (!$player instanceof Player)
                     continue;
-                foreach (self::DEFAULT_TAGS as $tag)
-                {
-                    $event = new PlayerTagUpdateEvent($player, new ScoreTag( self::TAG_PREFIX . "$tag", "N/A"));
-                    $event->call();;
-                }
+                $tagsArray = [];
+                foreach (self::DEFAULT_TAGS as $t)
+                    $tagsArray[] = new ScoreTag(self::TAG_PREFIX . $t, "N/A");
+                $event = new PlayerTagsUpdateEvent($event->getPlayer(), $tagsArray);
+                $event->call();
             }
         }), 20);
 
@@ -111,21 +114,21 @@ class TagResolveListener implements Listener
      */
     public function onCreate(CreationEvent $event): void
     {
-        FunBlockOneBlock::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($event): void {
-            $oneblock = $event->getOneBlock();
-            $level = $oneblock->getLevel()->asInt();
-            $xp = $oneblock->getLevel()->asInt();
-            $leader = $oneblock->getLeader();
-            $world = $oneblock->getWorld();
-            $chat = FunBlockOneBlock::getInstance()->isChatting($event->getPlayer());
-            $level_name = $oneblock->getLevel()->getName();
-            $island_name = $oneblock->getName();
-            foreach (self::DEFAULT_TAGS as $tag)
-            {
-                $event = new PlayerTagUpdateEvent($event->getPlayer(), new ScoreTag( self::TAG_PREFIX . "$tag", "${$tag}"));
-                $event->call();
-            }
-        }), 20);
+        $oneblock = $event->getOneBlock();
+        $level = $oneblock->getLevel()->asInt();
+        $xp = $oneblock->getLevel()->asInt();
+        $leader = $oneblock->getLeader();
+        $world = $oneblock->getWorld();
+        $chat = FunBlockOneBlock::getInstance()->isChatting($event->getPlayer());
+        $level_name = $oneblock->getLevel()->getName();
+        $island_name = $oneblock->getName();
+        $tagArray = [];
+        foreach (self::DEFAULT_TAGS as $tag)
+        {
+            $tagArray = new ScoreTag($tag, ${$tag});
+        }
+        $event = new PlayerTagsUpdateEvent($event->getPlayer(), $tagArray);
+        $event->call();
     }
 
     /**
