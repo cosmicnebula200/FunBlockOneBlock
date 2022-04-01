@@ -32,3 +32,6 @@ permissions:
   funblockoneblock.accept:
     default: true
     description: this permission allows the user to accept incoming invites when they have no oneblock island
+  funblockoneblock.rename:
+    default: true
+    description: this permission allows the user to rename their oneblock island

@@ -50,6 +50,9 @@ OneBlock is a survival gamemode in which you stand on a lonely block floating in
   funblockoneblock.accept:
     default: true
     description: this permission allows the user to accept incoming invites when they have no oneblock island
+  funblockoneblock.rename:
+    default: true
+    description: this permission allows the user to rename their oneblock island
 ```
 
 # Commands

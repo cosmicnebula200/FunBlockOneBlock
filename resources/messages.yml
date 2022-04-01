@@ -31,6 +31,8 @@ messages:
   visit: "visiting {NAME}'s OneBlock Island"
   delete: 'deleted your OneBlock Island successfully'
   toggle-chat: "toggled island chat"
+  not-leader: 'you are not a leader to execute this command'
+  renamed: 'you have now renamed your island to {NAME}'
 
 oneblock-chat: "&d[FunBlockOneBlock] &e[{PLAYER}] &6=> {MSG}"
 

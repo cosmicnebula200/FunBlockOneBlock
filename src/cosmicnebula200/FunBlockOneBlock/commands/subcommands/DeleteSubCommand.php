@@ -41,6 +41,11 @@ class DeleteSubCommand extends BaseSubCommand
             return;
         }
         $oneBlock = FunBlockOneBlock::getInstance()->getOneBlockManager()->getOneBlockByUuid($oneBlockPlayer->getOneBlock());
+        if ($sender->getName() !== $oneBlock->getLeader())
+        {
+            $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage("not-leader"));
+            return;
+        }
         foreach ($oneBlock->getMembers() as $member)
         {
             $player = FunBlockOneBlock::getInstance()->getServer()->getPlayerByPrefix($member);
