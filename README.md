@@ -67,6 +67,19 @@ go | teleports to your oneblock island | funblockoneblock.go |  |
 invite | invites the mentioned player to your oneblock island | funblockoneblock.invite | |
 visit | visit the mentioned player's oneblock island | funblockoneblock.visit | |
 
+# ScoreHud Tags
+
+Tag | Description |
+------- | ----------------|
+`funblockoneblock.xp` | Shows the XP of the member's OneBlock island |
+`funblockoneblock.level` | Shows the Level of the member's OneBlock island |
+`funblockoneblock.leader` | Shows the Leader of the member's OneBlock island ||
+`funblockoneblock.world` | Shows the World name of the member's OneBlock island ||
+`funblockoneblock.chat` | Shows the status (on/off) of the island chat ||
+`funblockoneblock.level_name` | Shows the Level Name of the member's OneBlock island ||
+`funblockoneblock.island_name` | Shows the Island Name of the member's OneBlock island ||
+
+
 # Settings
 
 Setting | Description | type |
