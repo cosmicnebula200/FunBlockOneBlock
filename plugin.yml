@@ -3,6 +3,8 @@ api: 4.0.0
 author: cosmicnebula200
 main: cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock
 version: 1.0.0-BETA-1
+softdepend:
+  - ScoreHud
 
 permissions:
   funblockoneblock.command:
