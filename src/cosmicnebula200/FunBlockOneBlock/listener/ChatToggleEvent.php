@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace cosmicnebula200\FunBlockOneBlock\listener;
 
 use pocketmine\player\Player;
@@ -7,7 +9,7 @@ use pocketmine\player\Player;
 class ChatToggleEvent extends OneBlockEvent
 {
 
-    public function __construct(public Player $player, public bool $status)
+    public function __construct(public Player $player, public string $status)
     {
 
     }
@@ -23,7 +25,7 @@ class ChatToggleEvent extends OneBlockEvent
     /**
      * @return bool
      */
-    public function getStatus(): bool
+    public function getStatus(): string
     {
         return $this->status;
     }

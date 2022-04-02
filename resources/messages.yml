@@ -33,6 +33,8 @@ messages:
   toggle-chat: "toggled island chat"
   not-leader: 'you are not a leader to execute this command'
   renamed: 'you have now renamed your island to {NAME}'
+  leader-no-leave: 'leaders can not leave the oneblock island'
+  left-ob: 'you have left the oneblock island'
 
 oneblock-chat: "&d[FunBlockOneBlock] &e[{PLAYER}] &6=> {MSG}"
 

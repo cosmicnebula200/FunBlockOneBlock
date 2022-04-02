@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace cosmicnebula200\FunBlockOneBlock\listener;
 
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
@@ -38,7 +40,7 @@ class TagResolveListener implements Listener
         switch ($tag->getName())
         {
             case self::TAG_PREFIX . 'xp':
-                $tag->setValue($oneBlock->getXp());
+                $tag->setValue((string)$oneBlock->getXp());
                 break;
             case self::TAG_PREFIX . 'level_name':
                 $tag->setValue($oneBlock->getLevel()->getName());
@@ -67,7 +69,7 @@ class TagResolveListener implements Listener
      */
     public function onXPChange(XPChangeEvent $event): void
     {
-        $ev = new PlayerTagUpdateEvent($event->getPlayer(), new ScoreTag( self::TAG_PREFIX . 'xp', $event->getXp()));
+        $ev = new PlayerTagUpdateEvent($event->getPlayer(), new ScoreTag( self::TAG_PREFIX . 'xp', (string)$event->getXp()));
         $ev->call();
     }
 
@@ -79,7 +81,7 @@ class TagResolveListener implements Listener
     {
         $ev = new PlayerTagsUpdateEvent(
             $event->getPlayer(), [
-            new ScoreTag( self::TAG_PREFIX . 'level', $event->getLevel()),
+            new ScoreTag( self::TAG_PREFIX . 'level', (string)$event->getLevel()),
             new ScoreTag( self::TAG_PREFIX . 'level_name', $event->getLevelName())
         ]);
         $ev->call();

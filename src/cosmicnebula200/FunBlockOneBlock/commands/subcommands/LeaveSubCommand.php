@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace cosmicnebula200\FunBlockOneBlock\commands\subcommands;
 
-use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseSubCommand;
 use cosmicnebula200\FunBlockOneBlock\FunBlockOneBlock;
 use cosmicnebula200\FunBlockOneBlock\oneblock\OneBlock;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 
-class RenameSubCommand extends BaseSubCommand
+class LeaveSubCommand extends BaseSubCommand
 {
 
     protected function prepare(): void
     {
-        $this->setPermission('funblockoneblock.rename');
-        $this->registerArgument(0, new RawStringArgument('name'));
+        $this->setPermission('funblockoneblock.leave');
     }
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
@@ -30,15 +28,15 @@ class RenameSubCommand extends BaseSubCommand
             $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('no-ob'));
             return;
         }
-        if ($sender->getName() !== $oneBlock->getLeader())
+        if ($sender->getName() == $oneBlock->getLeader())
         {
-            $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage("not-leader"));
+            $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage("leader-no-leave"));
             return;
         }
-        $oneBlock->setName($args['name']);
-        $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage("renamed", [
-            "name" => $args['name']
-        ]));
+        $members = $oneBlock->getMembers();
+        unset($members[array_search($sender->getName(), $members)]);
+        $oneBlock->setMembers($members);
+        $sender->sendMessage(FunBlockOneBlock::getInstance()->getMessages()->getMessage('left-ob'));
     }
 
 }

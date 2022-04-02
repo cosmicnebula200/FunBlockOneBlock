@@ -37,3 +37,6 @@ permissions:
   funblockoneblock.rename:
     default: true
     description: this permission allows the user to rename their oneblock island
+  funblockoneblock.leave:
+    default: true
+    description: this permission allows the user to leave their oneblock island

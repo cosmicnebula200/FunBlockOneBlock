@@ -11,6 +11,8 @@ use cosmicnebula200\FunBlockOneBlock\commands\subcommands\CreateSubCommand;
 use cosmicnebula200\FunBlockOneBlock\commands\subcommands\DeleteSubCommand;
 use cosmicnebula200\FunBlockOneBlock\commands\subcommands\GoSubCommand;
 use cosmicnebula200\FunBlockOneBlock\commands\subcommands\InviteSubCommand;
+use cosmicnebula200\FunBlockOneBlock\commands\subcommands\LeaveSubCommand;
+use cosmicnebula200\FunBlockOneBlock\commands\subcommands\RenameSubCommand;
 use cosmicnebula200\FunBlockOneBlock\commands\subcommands\VisitSubCommand;
 use pocketmine\command\CommandSender;
 
@@ -25,6 +27,8 @@ class OneBlockCommand extends BaseCommand
         $this->registerSubCommand(new DeleteSubCommand('delete', 'Deletes the mentioned users OneBlock Island'));
         $this->registerSubCommand(new GoSubCommand('go', 'Teleports to the users OneBlock island'));
         $this->registerSubCommand(new InviteSubCommand('invite', 'Invites the mentioned player to your island'));
+        $this->registerSubCommand(new LeaveSubCommand('leave', 'Leave the current oneblock island'));
+        $this->registerSubCommand(new RenameSubCommand('rename', 'Rename your oneblock island'));
         $this->registerSubCommand(new VisitSubCommand('visit', 'Visits the mentioned players island'));
         $this->registerSubCommand(new ChatSubCommand('chat', 'Chat with your oneblock members'));
     }
