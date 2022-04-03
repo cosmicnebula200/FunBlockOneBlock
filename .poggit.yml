@@ -6,6 +6,8 @@ projects:
   FunBlockOneBlock:
     path: ""
     icon: 'icon.png'
+    phpstan:
+      lint: false
     libs:
       - src: CortexPE/Commando/Commando
         version:  ^3.0.0
