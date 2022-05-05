@@ -17,5 +17,5 @@ projects:
       - src: muqsit/simplepackethandler/SimplePacketHandler
         version: ^0.0.1
       - src: jojoe77777/FormAPI/libFormAPI
-          version: ^2.1.0
+        version: ^2.1.0
 ...
