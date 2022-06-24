@@ -1,21 +1,57 @@
 levels:
   1:
-    name: 'Plains'
+    name: 'Level 1'
     levelup: 500
     blocks:
+      2:
+        meta: 0
+        chance: 90
+        xp: 1
       17:
+        meta: 0
+        chance: 10
+        xp: 5
+  2:
+    name: 'Level 2'
+    levelup: 1000
+    blocks:
+      2:
+        meta: 0
+        chance: 20
+        xp: 1
+      103:
         meta: 0
         chance: 5
         xp: 10
-      2:
+      17:
         meta: 0
-        chance: 25
+        chance: 20
         xp: 5
+      17:
+        meta: 2
+        chance: 20
+        xp: 5
+      3:
+        meta: 2
+        chance: 20
+        xp: 5
+      17:
+        meta: 1
+        chance: 20
+        xp: 5
+  3:
+    name: 'Level 3'
+    levelup: 1500
+    blocks:
       1:
         meta: 0
-        chance: 30
-        xp: 3
-      5:
+        chance: 70
+        xp: 5
+      13:
         meta: 0
-        chance: 40
+        chance: 20
         xp: 1
+      16:
+        meta: 0
+        chance: 10
+        xp: 20
