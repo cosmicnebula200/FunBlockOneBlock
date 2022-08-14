@@ -127,7 +127,7 @@ class TagResolveListener implements Listener
         $tagArray = [];
         foreach (self::DEFAULT_TAGS as $tag)
         {
-            $tagArray = new ScoreTag($tag, ${$tag});
+            $tagArray = new ScoreTag($tag, (string)${$tag});
         }
         $event = new PlayerTagsUpdateEvent($event->getPlayer(), $tagArray);
         $event->call();
